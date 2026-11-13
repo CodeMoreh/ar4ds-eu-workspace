@@ -14,7 +14,7 @@
 #               build report. The row counts per country-year are also
 #               checked against the committed panel.
 # Reads:        the sixteen .dta files in the folder named by EB_RAW_DIR
-#               data/EUframes_cy.csv and data/teney_panel_weights.csv (checks)
+#               data/europeanisation_cy.csv and data/teney_panel_weights.csv (checks)
 # Writes:       data_private/eb_respondents.rds – GESIS-derived microdata:
 #               never committed, uploaded, shared or passed to an AI assistant
 #               data_private/build_report.csv – the per-file check table
@@ -240,7 +240,7 @@ respondents <- respondents |>
 # same country-years, and the no-opinion count whether the closing codes were
 # read from the right columns. All three should agree exactly, and the report
 # lists where they do not.
-panel   <- readr::read_csv("data/EUframes_cy.csv", show_col_types = FALSE)
+panel   <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 weights <- readr::read_csv("data/teney_panel_weights.csv", show_col_types = FALSE)
 
 items13 <- names(item_labels)[c(1:7, 9:14)]

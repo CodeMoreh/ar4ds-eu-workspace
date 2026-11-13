@@ -1,5 +1,5 @@
 # ============================================================================
-# EXHIBIT ONLY – the independent workshop build that produced data/EUframes_cy.csv.
+# EXHIBIT ONLY – the independent workshop build that produced data/europeanisation_cy.csv.
 # Do NOT run it here: like the as-submitted prep script it needs the raw GESIS
 # Eurobarometer scientific-use files (registration required, not redistributable).
 # The paths below (rawdir, outdir_*) are the coordinator's own local machine
@@ -9,8 +9,8 @@
 # ============================================================================
 
 # ============================================================================
-# Build the workshop panel (EUframes_cy.csv) from raw Eurobarometer files
-# - Full sixteen-wave build (per the codebook inventory) -> data/EUframes_cy.csv
+# Build the workshop panel (europeanisation_cy.csv) from raw Eurobarometer files
+# - Full sixteen-wave build (per the codebook inventory) -> data/europeanisation_cy.csv
 # - A second variant reproducing the published artifact's
 #   wave set                                             -> _planning_data/ (comparison)
 # - Validates the rebuild against the published rep_data.csv
@@ -140,8 +140,8 @@ add_macro <- function(panel) {
 panel_corr <- add_macro(panel_corr)
 panel_pub  <- add_macro(panel_pub)
 
-write_csv(panel_corr, file.path(outdir_public, "EUframes_cy.csv"))
-write_csv(panel_pub,  file.path(outdir_priv,  "EUframes_cy_aspublished.csv"))
+write_csv(panel_corr, file.path(outdir_public, "europeanisation_cy.csv"))
+write_csv(panel_pub,  file.path(outdir_priv,  "europeanisation_cy_aspublished.csv"))
 
 # --- validation & impact -----------------------------------------------------
 suppressPackageStartupMessages(library(plm))
@@ -173,6 +173,6 @@ cat("published rep_data.csv :", t2(repdata |> rename(y0 = mcosmopolitan) |> muta
 cat("as-published rebuild   :", t2(panel_pub,  "mcosmo"), "\n")
 cat("corrected panel        :", t2(panel_corr, "mcosmo"), "\n")
 
-cat("\nRows in EUframes_cy.csv:", nrow(panel_corr), "| countries:",
+cat("\nRows in europeanisation_cy.csv:", nrow(panel_corr), "| countries:",
     length(unique(panel_corr$cntry)), "| years:", length(unique(panel_corr$year)), "\n")
 cat("BUILD DONE\n")

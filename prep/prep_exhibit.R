@@ -34,104 +34,104 @@ download.file("https://github.com/CGMoreh/data_raw/raw/main/Eurobarometer.zip",t
   # eb591 <- haven::read_dta(unz(temp, "ZA3904_v1-0-1.dta"))
   # eb713 <- haven::read_dta(unz(temp, "ZA4973_v3-0-0.dta"))
 
-euframes <- paste("fr", seq(1:14), sep = "")                    # Create standard names for the 14 'EU framing' items
+europeanisation <- paste("fr", seq(1:14), sep = "")                    # Create standard names for the 14 'EU framing' items
 
 eb <- bind_rows(                                                # Combine cases from 16 EB rounds
   #1# ---- eb61 ---- #
   (haven::read_dta(unz(temp, "ZA4056_v1-0-1.dta")) |>           # read in original Eurobarometer Gesis dataset
     mutate(year = 2004) |>                                      # year of the survey data collection
     rename(cntry = isocntry) |>                                 # standardise country variable name
-    rename_at(vars(v63:v76), ~ euframes) |>                     # standardise 'EU framing' variable names
+    rename_at(vars(v63:v76), ~ europeanisation) |>                     # standardise 'EU framing' variable names
     select(cntry, year, fr1:fr14, -fr8)),                       # keep vars of interest, exclude the "Euro" item
   #2# ---- eb62 ---- #
   (haven::read_dta(unz(temp, "ZA4229_v1-1-0.dta")) |>
     mutate(year = 2004) |>
     rename(cntry = v7) |>
-    rename_at(vars(v105:v118), ~ euframes) |>
+    rename_at(vars(v105:v118), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #3# ---- eb634 ---- #
   (haven::read_dta(unz(temp, "ZA4411_v1-1-0.dta"))  |>
     mutate(year = 2005) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v89:v102), ~ euframes) |>
+    rename_at(vars(v89:v102), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #4# ---- eb642 ---- #
   (haven::read_dta(unz(temp, "ZA4414_v1-1-0.dta"))  |>
     mutate(year = 2005) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v118:v131), ~ euframes) |>
+    rename_at(vars(v118:v131), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #5# ---- eb652 ---- #
   (haven::read_dta(unz(temp, "ZA4506_v1-0-1.dta")) |>
     mutate(year = 2006) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v98:v111), ~ euframes) |>
+    rename_at(vars(v98:v111), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #6# ---- eb672 ---- #
   (haven::read_dta(unz(temp, "ZA4530_v2-1-0.dta")) |>
     mutate(year = 2007) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v130:v143), ~ euframes) |>
+    rename_at(vars(v130:v143), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #7# ---- eb692 ---- #
   (haven::read_dta(unz(temp, "ZA4744_v5-0-0.dta"))  |>
     mutate(year = 2008) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v218:v231), ~ euframes) |>
+    rename_at(vars(v218:v231), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #8# ---- eb701 ---- #
   (haven::read_dta(unz(temp, "ZA4819_v3-0-2.dta")) |>
     mutate(year = 2008) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v234:v247), ~ euframes) |>
+    rename_at(vars(v234:v247), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #9# ---- eb724 ---- #
   (haven::read_dta(unz(temp, "ZA4819_v3-0-2.dta"))  |>
     mutate(year = 2009) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v234:v247), ~ euframes) |>
+    rename_at(vars(v234:v247), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #10# ---- eb734 ---- #
   (haven::read_dta(unz(temp, "ZA5234_v2-0-1.dta")) |>
     mutate(year = 2010) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v277:v290), ~ euframes) |>
+    rename_at(vars(v277:v290), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #11# ---- eb742 ---- #
   (haven::read_dta(unz(temp, "ZA5449_v2-2-0.dta")) |>
     mutate(year = 2010) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v306:v319), ~ euframes) |>
+    rename_at(vars(v306:v319), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #12# ---- eb753 ---- #
   (haven::read_dta(unz(temp, "ZA5481_v2-0-1.dta")) |>
     mutate(year = 2011) |>
     rename(cntry = v7)  |>
-    rename_at(vars(v315:v328), ~ euframes) |>
+    rename_at(vars(v315:v328), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #13# ---- eb763 ---- #
   (haven::read_dta(unz(temp, "ZA5567_v2-0-1.dta"))  |>
     mutate(year = 2011) |>
     rename(cntry = isocntry)  |>
-    rename_at(vars(qa12_1:qa12_14), ~ euframes) |>
+    rename_at(vars(qa12_1:qa12_14), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #14# ---- eb773 ---- #
   (haven::read_dta(unz(temp, "ZA5612_v2-0-0.dta")) |>
     mutate(year = 2012) |>
     rename(cntry = isocntry)  |>
-    rename_at(vars(qa15_1:qa15_14), ~ euframes) |>
+    rename_at(vars(qa15_1:qa15_14), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #15# ---- eb781 ---- #
   (haven::read_dta(unz(temp, "ZA5685_v2-0-0.dta"))  |>
     mutate(year = 2012) |>
     rename(cntry = isocntry)  |>
-    rename_at(vars(qa13_1:qa13_14), ~ euframes) |>
+    rename_at(vars(qa13_1:qa13_14), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   #16# ---- eb793 ---- #
   (haven::read_dta(unz(temp, "ZA5689_v2-0-0.dta")) |>
     mutate(year = 2013) |>
     rename(cntry = isocntry)  |>
-    rename_at(vars(qa14_1:qa14_14), ~ euframes) |>
+    rename_at(vars(qa14_1:qa14_14), ~ europeanisation) |>
     select(cntry, year, fr1:fr14, -fr8)),
   ) |>                                                             # Close `bind_rows`
   mutate(cntry = recode(cntry, "DE-E"="DE", "DE-W"="DE", "GB-GBN"="GB", "GB-NIR"="GB")) |> # combine region levels for Germany and UK

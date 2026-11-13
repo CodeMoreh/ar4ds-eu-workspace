@@ -2,7 +2,7 @@
 
 ## **What is this?**
 
-A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the Multi100 project, whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article – using the same data, tools, and workflow that the project used. You are analyst no. 6: you reproduce one of the three reanalyses that worked on aggregate data, chosen by you, and then work on the country-year panel that the facilitator built as one of the five analysts.
+A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the robustness study of SCORE (Multi100), whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article – using the same data, tools, and workflow that the project used. You are analyst no. 6: you reproduce one of the three reanalyses that worked on aggregate data, chosen by you, and then work on the country-year panel that the facilitator built as one of the five analysts.
 
 The report you build is `index.qmd`. It renders out of the box: the data ship inside `data/`, so your very first `quarto preview` works with no edits and no network.
 
@@ -41,7 +41,7 @@ This workspace is a plain folder, with no version control and no account to sign
 Everything above runs on the country-year panel in `data/`. The respondent-level data behind it are sixteen Eurobarometer surveys that GESIS distributes under terms that do not allow this workspace to include them, so they are downloaded under your own free GESIS account, into a folder outside the workspace. The course site lists the sixteen studies and walks through the download at https://codemoreh.github.io/ar4ds-eu/companion/data-sources.html#sec-gesis. Two scripts then do the rest:
 
 - `prep/01_build_respondents.R` – set the folder path at the top, source it once. It checks every file against the version and checksum of the copy from which the course was built, reads the sixteen, harmonises the respondent characteristics, and writes `data_private/eb_respondents.rds`. That folder is ignored by git and must stay so: the file is licensed microdata, never to be shared or opened in a session that an AI assistant can read.
-- `prep/02_scales_and_panel.R` – read and run section by section. It builds the framing scales under the three scoring rules, averages respondents into country-years, merges the macro series, reproduces `data/EUframes_cy.csv` to machine precision, and builds the panel by education band.
+- `prep/02_scales_and_panel.R` – read and run section by section. It builds the framing scales under the three scoring rules, averages respondents into country-years, merges the macro series, reproduces `data/europeanisation_cy.csv` to machine precision, and builds the panel by education band.
 
 The two scripts under `prep/` that begin "EXHIBIT ONLY" are the historical builds, kept for reading.
 
@@ -64,7 +64,7 @@ The tasks in `index.qmd` map to the day's learning objectives:
 - **The three Rs.** Distinguish reproducibility, robustness, and replicability – and say why the distinction matters. *(Task 1)*
 - **Meet the data.** Read the country-year panel and look at the outcome over time. *(Task 2)*
 - **State the estimand and encode it in a DAG.** Write the target quantity, then derive an adjustment set with `adjustmentSets()`. *(Task 2, continued)*
-- **Reproduce a recorded result.** Choose one of three Multi100 analysts – C6HJR (t = −3.804), KQXUE (t = −7.169) or 018OL (t = −1.206) – and refit the analysis on its data until the value on record comes back. *(Task 3)*
+- **Reproduce a recorded result.** Choose one of three analysts of the robustness study – C6HJR (t = −3.804), KQXUE (t = −7.169) or 018OL (t = −1.206) – and refit the analysis on its data until the value on record comes back. *(Task 3)*
 - **Work the specification menu.** Fit alternative specifications with `try_spec()`, compare them, and submit the one you would defend to the class chart with `submit_exploration()`, where it is labelled exploratory. *(Task 4)*
 - **Preregister, then build and run.** Complete the preregistration block, then translate it into a real fit and read the claim-aligned result. *(Task 5)*
 - **Locate yourself in the multiverse.** Submit your result with `report_result()` and find your circles among the others on the class chart by the tag that both submission functions print. *(Task 5, continued)*
@@ -75,9 +75,9 @@ The tasks in `index.qmd` map to the day's learning objectives:
 ## Links
 
 - **Course site:** https://codemoreh.github.io/ar4ds-eu/
-- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled Google Form; open it and press **Send**, and the result appears on the live multiverse chart at https://codemoreh.github.io/ar4ds-eu/cases/eu-frames/multiverse.html
+- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled Google Form; open it and press **Send**, and the result appears on the live multiverse chart at https://codemoreh.github.io/ar4ds-eu/cases/europeanisation/multiverse.html
 - **Take-home git/GitHub path:** https://codemoreh.github.io/ar4ds/git-github.html
-- **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official Multi100 archival record is at https://osf.io/8rtwe/.
+- **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
 
 ------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ This workspace is published as the "Use this template" repository `CodeMoreh/rep
 - `.devcontainer/devcontainer.json` – a Codespaces / dev-container image (R + Quarto + the package list) so the repo can be opened and rendered in the cloud with no local install.
 - `.github/workflows/publish.yml` – renders the report and publishes it to GitHub Pages on every push, once **Settings → Pages → Source** is set to **"GitHub Actions"**. It installs R and re-runs the chunks, so a participant's edits show up.
 
-Neither is needed for the zip route used in class. Keep `data/` in sync with the `data/` folder of the course repository: `EUframes_cy.csv` and its codebook are what the report reads directly, and `analyst_KQXUE.csv` and `analyst_018OL.csv`, with `analyst_panels_codebook.md`, are the data of the two other reproductions of Task 3. `teney_panel_measurement.csv` and `predictor_measures.csv` are the measurement variants of the panel and the published predictor series from which `R/spec_tools.R` fits every specification. `spec_curve.csv` (with `spec_curve_codebook.md`) is the curve of 864 specifications, from which the helpers read the placement of each fit and against which they check it, and `menu_options.csv` gives the reason for every option that is not on the curve. Each live fit computes its CR2 errors clustered by country, with Satterthwaite degrees of freedom, through the `clubSandwich` package, the rule that classes the curve, so it returns the stored p-value exactly. `teney_panel_weights.csv` is read by the two scripts in `prep/`.
+Neither is needed for the zip route used in class. Keep `data/` in sync with the `data/` folder of the course repository: `europeanisation_cy.csv` and its codebook are what the report reads directly, and `analyst_KQXUE.csv` and `analyst_018OL.csv`, with `analyst_panels_codebook.md`, are the data of the two other reproductions of Task 3. `teney_panel_measurement.csv` and `predictor_measures.csv` are the measurement variants of the panel and the published predictor series from which `R/spec_tools.R` fits every specification. `spec_curve.csv` (with `spec_curve_codebook.md`) is the curve of 864 specifications, from which the helpers read the placement of each fit and against which they check it, and `menu_options.csv` gives the reason for every option that is not on the curve. Each live fit computes its CR2 errors clustered by country, with Satterthwaite degrees of freedom, through the `clubSandwich` package, the rule that classes the curve, so it returns the stored p-value exactly. `teney_panel_weights.csv` is read by the two scripts in `prep/`.
 
 ------------------------------------------------------------------------
 

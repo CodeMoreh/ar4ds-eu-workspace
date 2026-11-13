@@ -1,12 +1,12 @@
-# Codebook: `EUframes_cy.csv`
+# Codebook: `europeanisation_cy.csv`
 
 Country-year panel built for the course "Applied Replication for Data Skills" (first delivered at the Open Research Conference, Newcastle University, June 2026). One row per EU member state per year, 2004–2013 (27 countries × 10 years = 270 rows).
 
 ## Sources and construction
 
-Individual-level data: 16 Eurobarometer waves (EB 61.0, 62.0, 63.4, 64.2, 65.2, 67.2, 69.2, 70.1, 72.4, 73.4, 74.2, 75.3, 76.3, 77.3, 78.1, 79.3), GESIS scientific-use files, as analysed in Teney (2016, *European Sociological Review* 32(5): 619–633) and in the Multi100 reanalysis of that paper (analyst C6HJR, https://osf.io/8rtwe/). The raw microdata are **not redistributable** – obtain them from GESIS (https://search.gesis.org/) under their usage terms. This file contains only derived country-year aggregates.
+Individual-level data: 16 Eurobarometer waves (EB 61.0, 62.0, 63.4, 64.2, 65.2, 67.2, 69.2, 70.1, 72.4, 73.4, 74.2, 75.3, 76.3, 77.3, 78.1, 79.3), GESIS scientific-use files, as analysed in Teney (2016, *European Sociological Review* 32(5): 619–633) and in the reanalysis of that paper by analyst C6HJR for the robustness study of SCORE (Multi100; Aczel et al. 2026; https://osf.io/8rtwe/). The raw microdata are **not redistributable** – obtain them from GESIS (https://search.gesis.org/) under their usage terms. This file contains only derived country-year aggregates.
 
-The four framing scales follow Teney (2016: 623): for each respondent, the number of mentioned items belonging to a dimension divided by the respondent's total number of mentioned items (13 items; the 'Euro' item is excluded, following footnote 1 of the original paper). Respondents who mention no items score 0, which is the rule of the Multi100 submission of analyst C6HJR on which this panel rests. The code of the original study leaves them out instead, because it divides by a total of zero mentions; the specification menu of the course offers both rules, as `zero` and `drop`. Scales are then averaged within country-year.
+The four framing scales follow Teney (2016: 623): for each respondent, the number of mentioned items belonging to a dimension divided by the respondent's total number of mentioned items (13 items; the 'Euro' item is excluded, following footnote 1 of the original paper). Respondents who mention no items score 0, which is the rule of analyst C6HJR, whose submission to the robustness study is the basis of this panel. The code of the original study leaves them out instead, because it divides by a total of zero mentions; the specification menu of the course offers both rules, as `zero` and `drop`. Scales are then averaged within country-year.
 
 Dimension item assignment (questionnaire item → dimension):
 
@@ -17,7 +17,7 @@ Dimension item assignment (questionnaire item → dimension):
 | Communitarian (negative, non-materialist) | Unemployment; Loss of cultural identity; More crime; Not enough control at external borders |
 | Libertarian (negative, materialist) | Bureaucracy; Waste of money |
 
-**Provenance note.** This panel was rebuilt independently from the raw GESIS files, using the sixteen-wave inventory above. The as-submitted Multi100 artefact (`rep_data.csv`) is preserved unchanged alongside it, under the column names that the original submission used.
+**Provenance note.** This panel was rebuilt independently from the raw GESIS files, using the sixteen-wave inventory above. The file as submitted to the robustness study (`rep_data.csv`) is preserved unchanged alongside it, under the column names that the original submission used.
 
 ## Variables
 

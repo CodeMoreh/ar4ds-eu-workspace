@@ -1,13 +1,13 @@
 ##############################################################################
-# Title:        Working script – the EU-frames robustness exercise, plain R
+# Title:        Working script – the robustness exercise of the Europeanisation case study, plain R
 # Purpose:      Tasks 2 to 5 of index.qmd, as a script you can step through in
 #               the console: look at the panel, reproduce one of the three
-#               results recorded in Multi100 that rest on aggregate data,
+#               results recorded in the robustness study that rest on aggregate data,
 #               explore the specification menu, then
 #               preregister one specification and fit and report it. Every fit
 #               is live, and each is tested by CR2 errors clustered by country
 #               with Satterthwaite df, as on the curve of 864 specifications.
-# Reads:        data/EUframes_cy.csv   (the EU-frames country-year panel);
+# Reads:        data/europeanisation_cy.csv   (the country-year panel);
 #               data/analyst_KQXUE.csv and data/analyst_018OL.csv (the data of
 #               two of the reproductions of Task 3);
 #               through R/spec_tools.R, data/teney_panel_measurement.csv and
@@ -30,13 +30,13 @@
 
 # The one working object, and the helpers that explore, preregister, build,
 # run and report a specification.
-euframes <- readr::read_csv("data/EUframes_cy.csv", show_col_types = FALSE)
+europeanisation <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 source("R/spec_tools.R")
 
 ## ---- Task 2: meet the panel -----------------------------------------------
 
 # One row per country-year: 27 EU member states x 10 years, 2004–2013.
-euframes |>
+europeanisation |>
   datawizard::data_summary(
     n_rows      = length(cntry),
     n_countries = insight::n_unique(cntry),
@@ -53,9 +53,9 @@ euframes |>
 # C6HJR – two-way (country + year) fixed effects on the course panel, with
 # unemployment centred on its grand mean, which shifts only the intercept. On
 # record: t = -3.804 on 233 df.
-euframes <- euframes |>
+europeanisation <- europeanisation |>
   datawizard::data_modify(unemp_c = unemp - mean(unemp))
-m1 <- fixest::feols(mcosmo ~ unemp_c | cntry + year, data = euframes, vcov = "iid")
+m1 <- fixest::feols(mcosmo ~ unemp_c | cntry + year, data = europeanisation, vcov = "iid")
 print(parameters::model_parameters(m1), digits = 5)
 
 # KQXUE – country fixed effects only, as xtreg cosmo unemployment, fe in Stata,

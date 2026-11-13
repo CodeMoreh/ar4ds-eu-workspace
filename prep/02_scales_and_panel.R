@@ -6,22 +6,22 @@
 #               respondent's answers are scored, what happens to a respondent
 #               who named nothing, how respondents are averaged into a
 #               country-year, and how the macro series are merged in. The
-#               rebuilt panel is compared with data/EUframes_cy.csv, which it
+#               rebuilt panel is compared with data/europeanisation_cy.csv, which it
 #               reproduces to machine precision when the respondent file has
 #               passed its checks. The last section builds the panel by
 #               education band, which the individual-level extension of the
 #               course uses.
 # Reads:        data_private/eb_respondents.rds
-#               data/EUframes_cy.csv, data/predictor_measures.csv,
+#               data/europeanisation_cy.csv, data/predictor_measures.csv,
 #               data/teney_panel_weights.csv
-# Writes:       data_private/EUframes_cy_rebuilt.csv
-#               data_private/EUframes_cy_edu.csv
+# Writes:       data_private/europeanisation_cy_rebuilt.csv
+#               data_private/europeanisation_cy_edu.csv
 # Author:       Chris Moreh
 # Last updated: 2026-10-26
 ##############################################################################
 
 respondents <- readRDS("data_private/eb_respondents.rds")
-panel       <- readr::read_csv("data/EUframes_cy.csv", show_col_types = FALSE)
+panel       <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 measures    <- readr::read_csv("data/predictor_measures.csv", show_col_types = FALSE)
 weights     <- readr::read_csv("data/teney_panel_weights.csv", show_col_types = FALSE)
 
@@ -137,7 +137,7 @@ weighted_differences <- tibble::tibble(
 )
 
 # the country-years compared, then the largest differences: as-interviewed
-# cell means, counts and macro series against data/EUframes_cy.csv, and
+# cell means, counts and macro series against data/europeanisation_cy.csv, and
 # design-weighted and count-built cell means against data/teney_panel_weights.csv
 c(compared = nrow(compare), in_panel = nrow(panel))
 print(as.data.frame(differences), row.names = FALSE, right = FALSE)
@@ -162,5 +162,5 @@ dir.create("data_private", showWarnings = FALSE)
 rebuilt |>
   datawizard::data_select(select = c("cntry", "year", scale_cols, "n_cy", "growth", "unemp",
                                      "bailout")) |>
-  readr::write_csv("data_private/EUframes_cy_rebuilt.csv")
-readr::write_csv(by_edu, "data_private/EUframes_cy_edu.csv")
+  readr::write_csv("data_private/europeanisation_cy_rebuilt.csv")
+readr::write_csv(by_edu, "data_private/europeanisation_cy_edu.csv")

@@ -1,5 +1,5 @@
 ---
-title: "Testing the robustness of a published claim: the EU-frames case"
+title: "Testing the robustness of a published claim: the Europeanisation and the economy case study"
 author: "Pair: [names]"
 date: today
 format:
@@ -30,10 +30,10 @@ knitr:
 tinyplot::tinytheme("minimal")
 options(scipen = 6, digits = 4)
 
-# The one working object: the EU-frames country-year panel. Task 3 fits
+# The one working object: the country-year panel. Task 3 fits
 # against it directly, the helpers of Tasks 4 and 5 fit against it too, and in
 # Task 5 they read their choices from your preregistration.
-euframes <- readr::read_csv("data/EUframes_cy.csv", show_col_types = FALSE)
+europeanisation <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 
 # The explore and preregister -> build -> run -> report helpers. Each fit
 # they make is a live fixest estimation on the version of the panel that the
@@ -43,7 +43,7 @@ source("R/spec_tools.R")
 
 # The figures that the text quotes, read from the curve that ships in data/:
 # the reproduced specification and the model that C6HJR chose in Task 1 of
-# Multi100 (the positive composite on growth, adjusted for unemployment).
+# the robustness study (the positive composite on growth, adjusted for unemployment).
 curve_rows <- readr::read_csv("data/spec_curve.csv", show_col_types = FALSE)
 ref_row <- datawizard::data_filter(curve_rows, is_reference)
 growth_row <- datawizard::data_filter(
@@ -58,7 +58,7 @@ The original author (OA) studied how citizens frame the European Union. One clai
 
 > "… poor economic performances … decrease positive dimensions of EU framing" (Teney 2016: 619)
 
-Operationalised the way that the Multi100 project constrained it for its five analysts: does a country's **unemployment rate** (poor economic performance) lower the **cosmopolitan** dimension of EU framing (peace, democracy, free movement, cultural diversity, a stronger say in the world)? The published result was a coefficient of −0.0034, t = −4.03.
+Operationalised the way that the robustness study of SCORE (Multi100; Aczel et al. 2026) constrained it for its five analysts: does a country's **unemployment rate** (poor economic performance) lower the **cosmopolitan** dimension of EU framing (peace, democracy, free movement, cultural diversity, a stronger say in the world)? The published result was a coefficient of −0.0034, t = −4.03.
 
 You have the data, the tools and the workflow that the project used. In Task 3 you reproduce one of the three reanalyses that worked on aggregate data, chosen by you, and from Task 4 onwards you work on the country-year panel that the facilitator built as one of the five analysts. You are analyst no. 6, and the question is how robust the published number is to *justifiable* alternative choices. Work through the five tasks below in order, from a setup check to two dots on the live class chart: an exploratory one from Task 4, and a declared one from Task 5, whose specification you fix in your preregistration before running it.
 
@@ -88,14 +88,14 @@ Every task is a callout box with instructions, a **TODO** you complete, and code
 ------------------------------------------------------------------------
 
 ::: {.callout-note title="Task 2 – Meet the panel"}
-The **EU-frames dataset** (`EUframes_cy.csv`) is the country-year panel behind the whole exercise. It is already loaded as `euframes` in the setup chunk, and the copy in `data/` is byte-identical to the one published in the analyst's fork on OSF (osf.io/6zqct – "Multi100 \| Teney_EurSocioRev_2016 \| Analyst_C6HJR", main folder); the official Multi100 archival record is at osf.io/8rtwe.
+The **country-year panel** (`europeanisation_cy.csv`) is the dataset behind the whole exercise. It is already loaded as `europeanisation` in the setup chunk, and the copy in `data/` is byte-identical to the one published in the analyst's fork on OSF (osf.io/6zqct – "Multi100 \| Teney_EurSocioRev_2016 \| Analyst_C6HJR", main folder); the official archival record of the robustness study is at osf.io/8rtwe.
 
 **TODO:** run the chunks, then read the small-multiples figure. Which countries trend down over 2004–2013? Note one in a comment.
 
 ```{r}
 #| label: count-data
 # How many countries, how many years, how big is the panel?
-euframes |>
+europeanisation |>
   datawizard::data_summary(
     countries = insight::n_unique(cntry),
     years     = insight::n_unique(year),
@@ -103,7 +103,7 @@ euframes |>
   )
 ```
 
-You should see **27 countries**, **10 years** (2004–2013), and **270 rows**. The outcome we care about first is `mcosmo` – the mean cosmopolitan framing of the EU in each country-year (a 0–1 scale). The predictor is `unemp`, the annual unemployment rate. The column `growth` is annual GDP growth, and `n_cy` counts the survey respondents behind each row. Every column is described in `data/EUframes_cy_codebook.md`.
+You should see **27 countries**, **10 years** (2004–2013), and **270 rows**. The outcome we care about first is `mcosmo` – the mean cosmopolitan framing of the EU in each country-year (a 0–1 scale). The predictor is `unemp`, the annual unemployment rate. The column `growth` is annual GDP growth, and `n_cy` counts the survey respondents behind each row. Every column is described in `data/europeanisation_cy_codebook.md`.
 
 ```{r}
 #| label: fig-cosmo-trend
@@ -112,7 +112,7 @@ You should see **27 countries**, **10 years** (2004–2013), and **270 rows**. T
 #| fig-height: 6
 # the lines first, one panel per country, then the points added on top
 tinyplot::tinyplot(
-  mcosmo ~ year, facet = ~cntry, data = euframes, type = "l", col = "grey55",
+  mcosmo ~ year, facet = ~cntry, data = europeanisation, type = "l", col = "grey55",
   facet.args = list(ncol = 6), xaxb = c(2004, 2008, 2013),
   xlab = "", ylab = "Mean cosmopolitan framing (0–1)"
 )
@@ -126,7 +126,7 @@ Most countries drift gently; a few move sharply around the 2009 crisis. That var
 ```{r}
 #| label: get-data
 #| eval: false
-# Optional: confirm data/EUframes_cy.csv from OSF (uses the local copy offline).
+# Optional: confirm data/europeanisation_cy.csv from OSF (uses the local copy offline).
 source("R/get_data.R")
 ```
 :::
@@ -171,11 +171,11 @@ Whatever set is returned by your DAG becomes field 4 of the preregistration you 
 ------------------------------------------------------------------------
 
 ::: {.callout-note title="Task 3 – Reproduce a recorded result"}
-This is the **reproducibility** check. Three of the five Multi100 analysts fitted their models on aggregate data, and their recorded results reproduce exactly from files in `data/`. The other two, KEVF1 and PRL47, fitted theirs on several hundred thousand respondents, whose files GESIS does not allow this workspace to hold. **Choose one of the three**, work through its chunk line by line, and compare the *t* that you get with the value on record. The chunks of the other two run as well when the report renders, so that you can set the three side by side afterwards. The codebooks in `data/` say how each file was built.
+This is the **reproducibility** check. Three of the five analysts of the robustness study fitted their models on aggregate data, and their recorded results reproduce exactly from files in `data/`. The other two, KEVF1 and PRL47, fitted theirs on several hundred thousand respondents, whose files GESIS does not allow this workspace to hold. **Choose one of the three**, work through its chunk line by line, and compare the *t* that you get with the value on record. The chunks of the other two run as well when the report renders, so that you can set the three side by side afterwards. The codebooks in `data/` say how each file was built.
 
 | Analyst | Data | Model | On record |
 |:--|:--|:--|:--|
-| C6HJR | `EUframes_cy.csv`, 270 country-years | Two-way fixed effects (country and year), conventional standard errors | t = −3.804 on 233 df |
+| C6HJR | `europeanisation_cy.csv`, 270 country-years | Two-way fixed effects (country and year), conventional standard errors | t = −3.804 on 233 df |
 | KQXUE | `analyst_KQXUE.csv`, 270 country-years | Country fixed effects, conventional standard errors | t = −7.169 on 242 df |
 | 018OL | `analyst_018OL.csv`, 420 cells of country, year and wave | Random intercepts for country, year and wave, Satterthwaite degrees of freedom | t = −1.206 on 396.9 df |
 
@@ -189,10 +189,10 @@ This is the **reproducibility** check. Three of the five Multi100 analysts fitte
 # two-way fixed effects this shifts the intercept, not the slope or the t – it
 # is the transformation that the recorded specification uses, so do it
 # explicitly.
-euframes <- euframes |> datawizard::data_modify(unemp_c = unemp - mean(unemp, na.rm = TRUE))
+europeanisation <- europeanisation |> datawizard::data_modify(unemp_c = unemp - mean(unemp, na.rm = TRUE))
 
 # fixest::feols – the bar separates the regression from the fixed effects.
-m1 <- fixest::feols(mcosmo ~ unemp_c | cntry + year, data = euframes, vcov = "iid")
+m1 <- fixest::feols(mcosmo ~ unemp_c | cntry + year, data = europeanisation, vcov = "iid")
 
 parameters::model_parameters(m1)
 ```
@@ -234,13 +234,13 @@ modelsummary::modelsummary(
 )
 ```
 
-Each model returns the value on record to the third decimal: **t = −3.804** for C6HJR, **t = −7.169** for KQXUE and **t = −1.206** for 018OL. The argument `vcov = "iid"` asks for classical standard errors, which assume that the errors are independent and identically distributed; they are the kind that `plm` reported for C6HJR and `xtreg` for KQXUE, which is why the *t* values match to three decimals. The three numbers are far apart although all three analysts worked on the same claim. They differ in what they averaged, which series of unemployment they took, which effects they removed and which errors they computed, and the case study on the course site sets the differences out. The data files carry two slips that the case study describes, both kept so that the values on record come back: the Stata code of KQXUE appended EB 62.0 twice (`cosmo_once` is the mean without the duplicate), and the files of 018OL put EB 79.3, fielded in 2013, in 2012 (`year_fieldwork` has the true year). Part 4 shows what changes when the country-years are not treated as independent.
+Each model returns the value on record to the third decimal: **t = −3.804** for C6HJR, **t = −7.169** for KQXUE and **t = −1.206** for 018OL. The argument `vcov = "iid"` asks for classical standard errors, which assume that the errors are independent and identically distributed; they are the kind that `plm` reported for C6HJR and `xtreg` for KQXUE, which is why the *t* values match to three decimals. The three numbers are far apart although all three analysts worked on the same claim. They differ in what they averaged, which series of unemployment they took, which effects they removed and which errors they computed, and the background page on the course site sets the differences out. The data files carry two slips that the same page describes, both kept so that the values on record come back: the Stata code of KQXUE appended EB 62.0 twice (`cosmo_once` is the mean without the duplicate), and the files of 018OL put EB 79.3, fielded in 2013, in 2012 (`year_fieldwork` has the true year). Part 4 shows what changes when the country-years are not treated as independent.
 :::
 
 ::: {.callout-note collapse="true" title="Reproduction and the five analysts"}
 You reproduced the recorded value exactly, and so did everyone else in the class who chose the same analyst, because each of you ran the same code on the same file. That is why reproducibility is the cheapest of the three Rs to establish once the data and the code are in hand; for these three analyses, putting them in hand meant rebuilding two of the files from the code that the analysts deposited.
 
-The five Multi100 analysts each wrote their own code for the same claim, and came back with five different numbers, one of them not significant under the analyst's own test. Part of the spread comes from the questions that each analyst chose to answer, part from errors that only a reading of the code shows, and most of the spread in the recorded correlations from the conversion that put them on one scale, as the case study on the course site sets out.
+The five analysts of the robustness study each wrote their own code for the same claim, and came back with five different numbers, one of them not significant under the analyst's own test. Part of the spread comes from the questions that each analyst chose to answer, part from errors that only a reading of the code shows, and most of the spread in the recorded correlations from the conversion that put them on one scale, as the background page on the course site sets out.
 
 In Task 2 you named the quantity you are after and drew the graph from which your adjustment set follows. In Task 4 you will see how far the answer moves when the other choices change.
 :::
@@ -310,7 +310,7 @@ A preregistration fixes your specification **before** you know its result, which
 
 Make one choice on each decision of the specification menu, then run the cell. The menu has fourteen decisions in three groups. The seven decisions about the question fix what you are asking, the four measurement decisions fix how that question is measured, and the three decisions about the model fix how it is estimated. The curve of 864 specifications keeps two or more options on nine of these decisions and a single option on the other five, which are the sample, the weighting, the scoring rule, the model family and the inference. An option that is not on the curve stops `prereg()` with the reason why, as it stops `try_spec()`. `claim_align <- TRUE` is the course convention, applied automatically: the claim expects framing to rise with GDP growth, so the sign of a growth slope is flipped, and 'supports the claim' reads as a negative sign for everyone.
 
-Task 2 of Multi100 fixed unemployment as the measure; the curve also holds GDP growth. In Task 1 of Multi100, where the choice was left to them, four of the five analysts already used GDP growth, two of them beside unemployment.
+Task 2 of the robustness study fixed unemployment as the measure; the curve also holds GDP growth. In Task 1 of the robustness study, where the choice was left to them, four of the five analysts already used GDP growth, two of them beside unemployment.
 :::
 
 ::: {.callout-important title="How this block maps to a real preregistration"}
@@ -323,7 +323,7 @@ Task 2 of Multi100 fixed unemployment as the measure; the curve also holds GDP g
 # MY PREREGISTRATION – one specification, declared before seeing its result
 # ============================================================================
 # 1. The claim I am testing: .................................................
-# 2. The data + what I already know: EUframes_cy.csv (270 country-years,
+# 2. The data + what I already know: europeanisation_cy.csv (270 country-years,
 #    public); I know that the reproduced specification gives t = -3.804,
 #    and what my exploration in Task 4 showed.
 # 3. My one specification – one choice on each decision. An option that is
@@ -385,7 +385,7 @@ run_spec(my_model)
 
 Read the output like an analyst, looking at the coefficient and at its claim-aligned partial *r*, the correlation between predictor and outcome once the rest of the model is taken into account. A partial *r* below zero is in the direction of the claim, and the CR2 p decides whether it is significant; the class line says which of the four cases your result falls in. The placement is the share of the 864 specifications on the curve that lie further in the direction of the claim than yours, `r round(100 * mean(curve_rows$r_ca < ref_row$r_ca))`% for the reproduced specification, the model of C6HJR in Task 3. Your result is about to join those of the class on the class chart.
 
-Now submit it to the class chart. There is nothing to fill in and nothing to transcribe – `report_result()` refits your preregistered specification, builds the spec label, and always submits on the claim-aligned scale that the chart is drawn on. It prints your submission line and a pre-filled form link; open it and press **Send**. Your dot appears on the live [Multiverse](https://codemoreh.github.io/ar4ds-eu/cases/eu-frames/multiverse.html) chart within seconds, this time labelled **declared** rather than exploratory, and with the same tag as your exploratory result.
+Now submit it to the class chart. There is nothing to fill in and nothing to transcribe – `report_result()` refits your preregistered specification, builds the spec label, and always submits on the claim-aligned scale that the chart is drawn on. It prints your submission line and a pre-filled form link; open it and press **Send**. Your dot appears on the live [Multiverse](https://codemoreh.github.io/ar4ds-eu/cases/europeanisation/multiverse.html) chart within seconds, this time labelled **declared** rather than exploratory, and with the same tag as your exploratory result.
 
 ```{r}
 #| label: report
@@ -409,7 +409,7 @@ Each of these is a real fit that you can run in this workspace if you have time 
 
 - **The mirror-image expectation.** The claim is about *positive* framing, and the other half of the hypothesis expects poor economic performance to *raise* negative framing. The three negative scales (`mcomm`, `mlib` and `mneg`) have a curve of their own on the Multiverse page of the course site, so the helpers refuse them here and say why: `try(try_spec(outcome = "mneg"))` prints the reason.
 
-- **Beyond unemployment.** Preregister `my_predictor <- "growth"` with `my_measure <- "wb_growth"` (GDP growth, which four of the five original analysts used when Multi100 left the choice of measure to them): the claim now predicts a *positive* growth coefficient on the positive framings, and the sign convention flips automatically. Refitted on the EU-frames panel, the model that analyst C6HJR chose in Task 1 of Multi100, `mpos ~ growth + unemp` with two-way fixed effects, gives a growth coefficient of b = +`r sprintf("%.5f", growth_row$b)`, t = `r sprintf("%.2f", growth_row$t)` on `r growth_row$df` df and a CR2 p of `r sprintf("%.3f", growth_row$p_cr2)`, which is not significant.
+- **Beyond unemployment.** Preregister `my_predictor <- "growth"` with `my_measure <- "wb_growth"` (GDP growth, which four of the five original analysts used when the robustness study left the choice of measure to them): the claim now predicts a *positive* growth coefficient on the positive framings, and the sign convention flips automatically. Refitted on the country-year panel, the model that analyst C6HJR chose in Task 1 of the robustness study, `mpos ~ growth + unemp` with two-way fixed effects, gives a growth coefficient of b = +`r sprintf("%.5f", growth_row$b)`, t = `r sprintf("%.2f", growth_row$t)` on `r growth_row$df` df and a CR2 p of `r sprintf("%.3f", growth_row$p_cr2)`, which is not significant.
 
 - **The full SCORE dossier.** OA's paper went through all three Rs in the SCORE programme and got three different verdicts: its push-button reproduction **failed** (the author-provided Stata code referenced file names that did not match what was available), its reproduction from the source data was recorded as **not reproduced**, and its preregistered replication on later Eurobarometer waves was judged **not successful** (a positive coefficient, opposite in sign to the claim and not significant). Explore reproduction, robustness, and replication side by side at <https://osf.io/h7432/>.
 :::

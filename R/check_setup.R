@@ -77,14 +77,14 @@ if (length(missing) == 0) {
 
 # --- 4. data files present and readable -------------------------------------
 # The report renders offline because these ship inside the workspace. The loop
-# confirms that they are here and that each can be read. EUframes_cy.csv is the
+# confirms that they are here and that each can be read. europeanisation_cy.csv is the
 # panel on which every task is fitted. The next four are what R/spec_tools.R
 # reads: the measurement variants of the panel, the published predictor series,
 # the curve of 864 specifications and the reasons for the options that are not
 # on it. The two analyst files hold the data on which the results of KQXUE and
-# 018OL reproduce in Task 3. rep_data.csv is the as-submitted Multi100
-# artefact, kept as provenance and used by no task.
-data_files <- c("data/EUframes_cy.csv", "data/teney_panel_measurement.csv",
+# 018OL reproduce in Task 3. rep_data.csv is the file as submitted to the
+# robustness study, kept as provenance and used by no task.
+data_files <- c("data/europeanisation_cy.csv", "data/teney_panel_measurement.csv",
                 "data/predictor_measures.csv", "data/spec_curve.csv",
                 "data/menu_options.csv", "data/analyst_KQXUE.csv",
                 "data/analyst_018OL.csv", "data/rep_data.csv")
@@ -102,10 +102,10 @@ for (f in data_files) { # r-style: keep – each pass prints one check line
 }
 
 # The codebook that the tasks refer to.
-if (file.exists("data/EUframes_cy_codebook.md")) {
-  ok("data/EUframes_cy_codebook.md present")
+if (file.exists("data/europeanisation_cy_codebook.md")) {
+  ok("data/europeanisation_cy_codebook.md present")
 } else {
-  skip("data/EUframes_cy_codebook.md not found (optional reference)")
+  skip("data/europeanisation_cy_codebook.md not found (optional reference)")
 }
 
 # --- 5. the report file -----------------------------------------------------

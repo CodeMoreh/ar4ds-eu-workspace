@@ -26,7 +26,7 @@
 #               864 is read from data/spec_curve.csv. The packages are those
 #               that the report requires: readr, dplyr, purrr, fixest,
 #               clubSandwich and effectsize. Through it the report reads
-#               data/EUframes_cy.csv, data/teney_panel_measurement.csv,
+#               data/europeanisation_cy.csv, data/teney_panel_measurement.csv,
 #               data/predictor_measures.csv, data/spec_curve.csv and
 #               data/menu_options.csv.
 #               The data of a specification are filtered with dplyr, because
@@ -116,8 +116,8 @@
   "companion/weighting.qmd"        = "Weights",
   "companion/missingness.qmd"      = "Missing answers",
   "companion/data-sources.qmd"     = "Social science data sources",
-  "cases/eu-frames/multiverse.qmd" = "Multiverse",
-  "cases/eu-frames/map.qmd"        = "Decision map")
+  "cases/europeanisation/multiverse.qmd" = "Multiverse",
+  "cases/europeanisation/map.qmd"        = "Decision map")
 .page_ref <- function(path) {
   title <- if (path %in% names(.page_titles)) .page_titles[[path]] else path
   sprintf("%s, %s/%s", title, .course_url, sub("\\.qmd$", ".html", path))
@@ -136,7 +136,7 @@
   axis  <- sub("^my_", "", k)
   keep  <- if (k == "my_measure" && isTRUE(ch$my_predictor %in% names(.measures_for)))
     .measures_for[[ch$my_predictor]] else .menu[[k]]
-  map   <- paste0("  Every decision and its options: ", .page_ref("cases/eu-frames/map.qmd"))
+  map   <- paste0("  Every decision and its options: ", .page_ref("cases/europeanisation/map.qmd"))
   if (!is.character(v) || length(v) != 1 || is.na(v))
     stop(sprintf("%s needs one option in quotes, for example %s = \"%s\".",
                  shown(axis), shown(axis), .menu[[k]][1]), call. = FALSE)
@@ -209,7 +209,7 @@
   series <- .read_once("predictors", "data/predictor_measures.csv") |>
     dplyr::filter(.data$measure == ch$my_measure) |>
     dplyr::select("cntry", "year", pred = "value")
-  .read_once("panel", "data/EUframes_cy.csv") |>
+  .read_once("panel", "data/europeanisation_cy.csv") |>
     dplyr::select("cntry", "year", wb_unemp = "unemp", wb_growth = "growth") |>
     dplyr::inner_join(outcome, by = c("cntry", "year")) |>
     dplyr::inner_join(series, by = c("cntry", "year")) |>
@@ -243,7 +243,7 @@
 # bias-reduced linearisation of Bell and McCaffrey (2002) with the df of
 # Pustejovsky and Tipton (2018, Journal of Business & Economic Statistics),
 # computed by clubSandwich on the same model fitted by lm() with the fixed
-# effects as dummies. r is the conversion rule of Multi100
+# effects as dummies. r is the conversion rule of the robustness study
 # (standard_correlation_coefficient.R in marton-balazs-kovacs/multi100 on
 # GitHub), r = t / sqrt(t^2 + df), which effectsize::t_to_r() computes. The
 # result has the form that the printout and the submission use: the
