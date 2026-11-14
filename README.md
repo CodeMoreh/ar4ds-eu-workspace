@@ -75,7 +75,7 @@ The tasks in `index.qmd` map to the day's learning objectives:
 ## Links
 
 - **Course site:** https://codemoreh.github.io/ar4ds-eu/
-- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled Google Form; open it and press **Send**, and the result appears on the live multiverse chart at https://codemoreh.github.io/ar4ds-eu/cases/europeanisation/multiverse.html
+- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled Google Form; open it and press **Send**, and the result appears on the live class chart at https://codemoreh.github.io/ar4ds-eu/cases/europeanisation/class-results.html
 - **Take-home git/GitHub path:** https://codemoreh.github.io/ar4ds/git-github.html
 - **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
 

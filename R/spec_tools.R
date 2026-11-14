@@ -116,8 +116,8 @@
   "companion/weighting.qmd"        = "Weights",
   "companion/missingness.qmd"      = "Missing answers",
   "companion/data-sources.qmd"     = "Social science data sources",
-  "cases/europeanisation/multiverse.qmd" = "Multiverse",
-  "cases/europeanisation/map.qmd"        = "Decision map")
+  "cases/europeanisation/curve.qmd" = "Specification curve",
+  "cases/europeanisation/menu.qmd"  = "Specification menu")
 .page_ref <- function(path) {
   title <- if (path %in% names(.page_titles)) .page_titles[[path]] else path
   sprintf("%s, %s/%s", title, .course_url, sub("\\.qmd$", ".html", path))
@@ -136,7 +136,7 @@
   axis  <- sub("^my_", "", k)
   keep  <- if (k == "my_measure" && isTRUE(ch$my_predictor %in% names(.measures_for)))
     .measures_for[[ch$my_predictor]] else .menu[[k]]
-  map   <- paste0("  Every decision and its options: ", .page_ref("cases/europeanisation/map.qmd"))
+  map   <- paste0("  Every decision and its options: ", .page_ref("cases/europeanisation/menu.qmd"), "#map")
   if (!is.character(v) || length(v) != 1 || is.na(v))
     stop(sprintf("%s needs one option in quotes, for example %s = \"%s\".",
                  shown(axis), shown(axis), .menu[[k]][1]), call. = FALSE)
@@ -541,10 +541,10 @@ run_spec <- function(spec) {
     "",
     sprintf("Your marks on the class chart carry the tag %s%s.", tg$tag,
             if (!is.null(tg$replaced)) sprintf(" (it replaces %s)", tg$replaced) else ""),
-    "Type it into the my_tag line of the live cell on the Multiverse page to",
-    "highlight them. Both of your submissions share it. To choose your own, pass",
-    "nickname = \"...\" – pick a nickname rather than your name, because the chart",
-    "is public."))
+    "Type it into the my_tag line of the live cell on the Class results page,",
+    sprintf("%s/cases/europeanisation/class-results.html, to highlight them.", .course_url),
+    "Both of your submissions share it. To choose your own, pass nickname = \"...\"",
+    "– pick a nickname rather than your name, because the chart is public."))
   invisible(list(spec = spec_label, tag = tg$tag, b = b, se = res$se, statistic = tv,
                  df = res$df, n = res$n, r = r, url = url))
 }
