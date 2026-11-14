@@ -65,7 +65,7 @@ You have the data, the tools and the workflow that the project used. In Task 3 y
 ::: callout-tip
 ## How the tasks work
 
-Every task is a callout box with instructions, a **TODO** you complete, and code chunks that **already run** – so the report renders from the first preview. You edit the prose blanks and, in Tasks 4 and 5, the code. The course site also has a browser version of this exercise, for practice without an installation or as a fallback if your machine fails; this workspace is the full IDE pipeline.
+Every task is a callout box with instructions, a **TODO** you complete, and code chunks that **already run** – so the report renders from the first preview. You edit the prose blanks and, in Tasks 4 and 5, the code. The course site carries the same exercise in the browser: on the slides of the workshop, which run R inside the browser and on which the facilitator shows each step, and in the browser lab, which holds the same tasks on a page. Both serve for practice without an installation and as the fallback if your machine fails; this workspace is the full IDE pipeline.
 :::
 
 ------------------------------------------------------------------------
