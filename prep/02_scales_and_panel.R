@@ -48,9 +48,11 @@ items13 <- c(items$pos, items$neg)
 # specification menu treats it as one.
 #
 # A respondent who mentioned none of the thirteen items has no total to divide
-# by. The published rule scores them zero on every scale. The other rules on
-# the menu (drop, split, impute) are applied further down the pipeline and are
-# explained in the missing-answers module.
+# by. The course panel scores them zero on every scale, as analyst C6HJR did;
+# the code of the original study left them out, because it divided by a total
+# of zero. The other rules on the menu (drop, split, impute) are applied
+# further down the pipeline and are explained in the module on the items
+# behind the scales.
 #
 # The three columns of each scale are added scale by scale: c_ the count, s_
 # the share and r_ the per-item rate.

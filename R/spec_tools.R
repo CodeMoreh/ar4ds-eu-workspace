@@ -107,6 +107,8 @@
 # An option that is not on the curve stops with the reason from
 # menu_options.csv, the page of the course that teaches it, and the options
 # that stay on the curve.
+# A taught_on path may end in the id of a section, which the titles key and
+# .page_ref() keeps in the address.
 .page_titles <- c(
   "companion/measurement.qmd"      = "The items behind the scales",
   "companion/panel-data.qmd"       = "Panel data",
@@ -114,13 +116,14 @@
   "companion/dags.qmd"             = "Causal graphs",
   "companion/multiverse.qmd"       = "The multiverse and its critics",
   "companion/weighting.qmd"        = "Weights",
-  "companion/missingness.qmd"      = "Missing answers",
+  "companion/measurement.qmd#sec-noop"       = "The items behind the scales",
+  "companion/measurement.qmd#sec-imputation" = "The items behind the scales",
   "companion/data-sources.qmd"     = "Social science data sources",
   "cases/europeanisation/curve.qmd" = "Specification curve",
   "cases/europeanisation/menu.qmd"  = "Specification menu")
 .page_ref <- function(path) {
   title <- if (path %in% names(.page_titles)) .page_titles[[path]] else path
-  sprintf("%s, %s/%s", title, .course_url, sub("\\.qmd$", ".html", path))
+  sprintf("%s, %s/%s", title, .course_url, sub(".qmd", ".html", path, fixed = TRUE))
 }
 .or_list <- function(x) {
   q <- paste0("\"", x, "\"")
