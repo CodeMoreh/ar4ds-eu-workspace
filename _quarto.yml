@@ -7,7 +7,7 @@ project:
     - index.qmd
 
 website:
-  title: "Replication lab – Europeanisation and the economy"
+  title: "AR4DS workspace – Europeanisation and the economy"
 
 # freeze: auto means a whole-project render re-runs a document (every chunk in it)
 # only when its source file has changed. The committed

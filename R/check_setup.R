@@ -33,7 +33,7 @@ sys_out <- function(cmd, args) {
   if (length(out) == 0) "" else trimws(paste(out, collapse = " "))
 }
 
-writeLines("\n=== Replication lab – setup check ===\n")
+writeLines("\n=== AR4DS workspace, the Europeanisation and the economy case study – setup check ===\n")
 
 # --- 1. R version -----------------------------------------------------------
 if (getRversion() >= "4.4.0") {
