@@ -118,6 +118,7 @@
   "companion/measurement.qmd#sec-noop"       = "The items behind the scales",
   "companion/measurement.qmd#sec-imputation" = "The items behind the scales",
   "companion/multilevel.qmd#sec-weights"     = "Multilevel models",
+  "companion/multilevel.qmd#sec-glm"         = "Multilevel models",
   "companion/data-sources.qmd"     = "Social science data sources",
   "cases/europeanisation/curve.qmd" = "Specification curve",
   "cases/europeanisation/menu.qmd"  = "Specification menu")
