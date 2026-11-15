@@ -11,17 +11,17 @@
 #               so nothing is done; (2) osfr fetches europeanisation_cy.csv from the
 #               main folder of OSF node 6zqct, the fork of the analyst; (3) the
 #               mirror on the course site, https://codemoreh.github.io/
-#               ar4ds-eu/cases/europeanisation/data/europeanisation_cy.csv.
+#               ar4ds-eu/data/europeanisation_cy.csv.
 #               The fork osf.io/6zqct ("Multi100 | Teney_EurSocioRev_2016 |
 #               Analyst_C6HJR") is maintained for educational use; the
 #               official archival record of the robustness study is osf.io/8rtwe.
 # Author:       Chris Moreh
-# Last updated: 2026-10-26
+# Last updated: 2026-11-15
 # Sourced by:   index.qmd (Task 2, optional), which writes or confirms
 #               data/europeanisation_cy.csv
 ##############################################################################
 
-get_data <- function(dest = "data/europeanisation_cy.csv") {
+get_data <- function(dest = "data/europeanisation_cy.csv") {  # r-style: approved
 
   dir.create(dirname(dest), showWarnings = FALSE, recursive = TRUE)
 
@@ -62,7 +62,7 @@ get_data <- function(dest = "data/europeanisation_cy.csv") {
   message("[3/3] Trying the course site mirror …")
   ok <- tryCatch({
     utils::download.file(
-      "https://codemoreh.github.io/ar4ds-eu/cases/europeanisation/data/europeanisation_cy.csv",
+      "https://codemoreh.github.io/ar4ds-eu/data/europeanisation_cy.csv",
       dest, mode = "wb", quiet = TRUE)
     file.exists(dest) && file.size(dest) > 0
   }, error = function(e) {

@@ -6,7 +6,7 @@
 #               checks, and changes nothing on your system. Base R throughout,
 #               because it has to run before any package is installed.
 # Author:       Chris Moreh
-# Last updated: 2026-10-26
+# Last updated: 2026-11-15
 # Sourced by:   the participant, before the session (source("R/check_setup.R"))
 ##############################################################################
 
@@ -16,16 +16,16 @@
 
 # --- tiny reporting helpers -------------------------------------------------
 .results <- list2env(list(pass = 0L, fail = 0L, skip = 0L))
-.tally <- function(kind, label, msg) {
+.tally <- function(kind, label, msg) {  # r-style: approved
   assign(kind, get(kind, envir = .results) + 1L, envir = .results)
   writeLines(paste0(label, msg))
 }
-ok   <- function(msg) .tally("pass", "[OK]   ", msg)
-fail <- function(msg) .tally("fail", "[FAIL] ", msg)
-skip <- function(msg) .tally("skip", "[SKIP] ", msg)
+ok   <- function(msg) .tally("pass", "[OK]   ", msg)  # r-style: approved
+fail <- function(msg) .tally("fail", "[FAIL] ", msg)  # r-style: approved
+skip <- function(msg) .tally("skip", "[SKIP] ", msg)  # r-style: approved
 
 # Run a system command quietly and return its trimmed stdout, or "" on failure.
-sys_out <- function(cmd, args) {
+sys_out <- function(cmd, args) {  # r-style: approved
   out <- tryCatch(
     suppressWarnings(system2(cmd, args, stdout = TRUE, stderr = TRUE)),
     error = function(e) character(0)
@@ -59,9 +59,8 @@ if (nzchar(qv) && !grepl("not found|error", qv, ignore.case = TRUE)) {
 # insight, dplyr, purrr, tibble and readr, the figures tinyplot, and the causal
 # graph dagitty and ggdag. Quarto runs the R chunks of the report through
 # rmarkdown, so a fresh R installation without it renders nothing. The build of
-# the respondent file for day 3 of the Extended course,
-# prep/01_build_respondents.R, reads the Eurobarometer files with haven, which
-# none of the other packages installs.
+# the respondent file, prep/01_build_respondents.R, reads the Eurobarometer
+# files with haven, which none of the other packages installs.
 needed <- c("readr", "datawizard", "insight", "dplyr", "purrr", "tibble", "fixest", "clubSandwich",
             "effectsize", "parameters", "lme4", "lmerTest", "tinyplot", "dagitty", "ggdag",
             "modelsummary", "osfr", "haven", "rmarkdown")

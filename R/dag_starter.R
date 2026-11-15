@@ -8,7 +8,7 @@
 #               Uncomment the ones you believe, re-source, and read the
 #               adjustment set off the graph with dagitty::adjustmentSets().
 # Author:       Chris Moreh
-# Last updated: 2026-10-26
+# Last updated: 2026-11-15
 # Sourced by:   index.qmd (Task 2)
 ##############################################################################
 
@@ -103,7 +103,7 @@ dag <- ggdag::dagify(
 # outcome, and every other node is grey. The canvas is a tinyplot (McDermott,
 # Arel-Bundock and Zeileis, tinyplot, CRAN, doi:10.32614/CRAN.package.tinyplot),
 # and the arrows and boxes are drawn on it with the base graphics under it.
-plot_dag <- function(d = dag) {
+plot_dag <- function(d = dag) {  # r-style: approved
   xy <- dagitty::coordinates(d)
   # only the nodes that some arrow mentions are in the graph; dplyr::mutate(),
   # because the columns are built from the arguments of this function

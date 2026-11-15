@@ -17,7 +17,7 @@
 # Writes:       data_private/europeanisation_cy_rebuilt.csv
 #               data_private/europeanisation_cy_edu.csv
 # Author:       Chris Moreh
-# Last updated: 2026-10-26
+# Last updated: 2026-11-15
 ##############################################################################
 
 respondents <- readRDS("data_private/eb_respondents.rds")
@@ -69,7 +69,7 @@ scored <- names(items) |>
 # The course panel averages every respondent in a country-year with the same
 # weight ('as interviewed'). The design weight w1, which GESIS supplies to
 # correct each national sample to its population, is the other choice, and the
-# section on weights of the module Multilevel models compares the two. Both
+# decision Cell weighting of the specification menu compares the two. Both
 # are computed here.
 cells <- scored |>
   dplyr::summarise(
