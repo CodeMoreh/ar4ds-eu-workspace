@@ -115,9 +115,9 @@
   "companion/multilevel.qmd"       = "Multilevel models",
   "companion/dags.qmd"             = "Causal graphs",
   "companion/multiverse.qmd"       = "The multiverse and its critics",
-  "companion/weighting.qmd"        = "Weights",
   "companion/measurement.qmd#sec-noop"       = "The items behind the scales",
   "companion/measurement.qmd#sec-imputation" = "The items behind the scales",
+  "companion/multilevel.qmd#sec-weights"     = "Multilevel models",
   "companion/data-sources.qmd"     = "Social science data sources",
   "cases/europeanisation/curve.qmd" = "Specification curve",
   "cases/europeanisation/menu.qmd"  = "Specification menu")

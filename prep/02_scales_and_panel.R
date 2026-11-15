@@ -69,7 +69,8 @@ scored <- names(items) |>
 # The course panel averages every respondent in a country-year with the same
 # weight ('as interviewed'). The design weight w1, which GESIS supplies to
 # correct each national sample to its population, is the other choice, and the
-# weights module compares the two. Both are computed here.
+# section on weights of the module Multilevel models compares the two. Both
+# are computed here.
 cells <- scored |>
   dplyr::summarise(
     dplyr::across(dplyr::starts_with("s_"), mean, .names = "m{.col}"),
