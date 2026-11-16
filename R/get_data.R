@@ -21,7 +21,7 @@
 #               data/europeanisation_cy.csv
 ##############################################################################
 
-get_data <- function(dest = "data/europeanisation_cy.csv") {  # r-style: approved
+get_data <- function(dest = "data/europeanisation_cy.csv") {
 
   dir.create(dirname(dest), showWarnings = FALSE, recursive = TRUE)
 

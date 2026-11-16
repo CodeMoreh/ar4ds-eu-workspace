@@ -171,9 +171,9 @@ read_wave <- function(w, path) {
   stopifnot("EU-meaning items are not coded 0/1" = all(vals %in% c(0, 1)))
 
   # Germany and the United Kingdom are sampled as two regions each; the
-  # published analysis treats each as one country. dplyr::mutate() and
-  # dplyr::filter(), because the values name the argument w and the vector
-  # eu27, which the datawizard verbs cannot see from inside a function.
+  # published analysis treats each as one country. dplyr::mutate(), because
+  # the values name the argument w, which datawizard::data_modify() does not
+  # find inside a function.
   d |>
     dplyr::mutate(cntry = as.character(cntry),
                   cntry = datawizard::recode_values(cntry, recode = list(DE = c("DE-E", "DE-W"),

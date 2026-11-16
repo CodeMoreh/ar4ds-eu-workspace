@@ -111,7 +111,7 @@ bailout <- datawizard::data_select(panel, select = c("cntry", "year", "bailout")
 rebuilt <- cells |>
   dplyr::left_join(macro,   by = c("cntry", "year")) |>
   dplyr::left_join(bailout, by = c("cntry", "year")) |>
-  # r-style: keep – dplyr::arrange() sorts in the C locale on every machine
+  # dplyr::arrange() sorts in the C locale on every machine
   dplyr::arrange(cntry, year)
 
 # --- 5. comparison with the course panel -------------------------------------------
@@ -158,7 +158,7 @@ by_edu <- scored |>
   dplyr::rename_with(\(x) sub("^ms_", "m", x), dplyr::starts_with("ms_")) |>
   dplyr::left_join(macro,   by = c("cntry", "year")) |>
   dplyr::left_join(bailout, by = c("cntry", "year")) |>
-  # r-style: keep – dplyr::arrange() sorts in the C locale on every machine
+  # dplyr::arrange() sorts in the C locale on every machine
   dplyr::arrange(cntry, year, edu3)
 
 dir.create("data_private", showWarnings = FALSE)

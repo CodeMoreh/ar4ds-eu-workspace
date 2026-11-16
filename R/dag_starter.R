@@ -103,7 +103,7 @@ dag <- ggdag::dagify(
 # outcome, and every other node is grey. The canvas is a tinyplot (McDermott,
 # Arel-Bundock and Zeileis, tinyplot, CRAN, doi:10.32614/CRAN.package.tinyplot),
 # and the arrows and boxes are drawn on it with the base graphics under it.
-plot_dag <- function(d = dag) {  # r-style: approved
+plot_dag <- function(d = dag) {
   xy <- dagitty::coordinates(d)
   # only the nodes that some arrow mentions are in the graph; dplyr::mutate(),
   # because the columns are built from the arguments of this function

@@ -16,16 +16,16 @@
 
 # --- tiny reporting helpers -------------------------------------------------
 .results <- list2env(list(pass = 0L, fail = 0L, skip = 0L))
-.tally <- function(kind, label, msg) {  # r-style: approved
+.tally <- function(kind, label, msg) {
   assign(kind, get(kind, envir = .results) + 1L, envir = .results)
   writeLines(paste0(label, msg))
 }
-ok   <- function(msg) .tally("pass", "[OK]   ", msg)  # r-style: approved
-fail <- function(msg) .tally("fail", "[FAIL] ", msg)  # r-style: approved
-skip <- function(msg) .tally("skip", "[SKIP] ", msg)  # r-style: approved
+ok   <- function(msg) .tally("pass", "[OK]   ", msg)
+fail <- function(msg) .tally("fail", "[FAIL] ", msg)
+skip <- function(msg) .tally("skip", "[SKIP] ", msg)
 
 # Run a system command quietly and return its trimmed stdout, or "" on failure.
-sys_out <- function(cmd, args) {  # r-style: approved
+sys_out <- function(cmd, args) {
   out <- tryCatch(
     suppressWarnings(system2(cmd, args, stdout = TRUE, stderr = TRUE)),
     error = function(e) character(0)
@@ -64,13 +64,13 @@ if (nzchar(qv) && !grepl("not found|error", qv, ignore.case = TRUE)) {
 needed <- c("readr", "datawizard", "insight", "dplyr", "purrr", "tibble", "fixest", "clubSandwich",
             "effectsize", "parameters", "lme4", "lmerTest", "tinyplot", "dagitty", "ggdag",
             "modelsummary", "osfr", "haven", "rmarkdown")
-missing <- needed[!vapply(needed, requireNamespace, logical(1), quietly = TRUE)] # r-style: keep – purrr may not be installed yet
+missing <- needed[!vapply(needed, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing) == 0) {
   ok(paste0("all ", length(needed), " required packages installed"))
 } else {
   fail(paste0("missing package(s): ", paste(missing, collapse = ", ")))
   writeLines(c("        install the missing ones with:",
-               paste0('          install.packages("pak"); pak::pak(c("', # r-style: keep – the instruction printed for a machine without pak
+               paste0('          install.packages("pak"); pak::pak(c("',
                       paste(missing, collapse = '", "'), '"))')))
 }
 
@@ -87,12 +87,12 @@ data_files <- c("data/europeanisation_cy.csv", "data/teney_panel_measurement.csv
                 "data/predictor_measures.csv", "data/spec_curve.csv",
                 "data/menu_options.csv", "data/analyst_KQXUE.csv",
                 "data/analyst_018OL.csv", "data/rep_data.csv")
-for (f in data_files) { # r-style: keep – each pass prints one check line
+for (f in data_files) {
   if (!file.exists(f)) {
     fail(paste0("data file missing: ", f, " – run from the workspace root folder"))
     next
   }
-  n_rows <- tryCatch(nrow(utils::read.csv(f)), error = function(e) NA_integer_) # r-style: keep – readr may not be installed yet
+  n_rows <- tryCatch(nrow(utils::read.csv(f)), error = function(e) NA_integer_)
   if (is.na(n_rows)) {
     fail(paste0("could not read ", f))
   } else {
