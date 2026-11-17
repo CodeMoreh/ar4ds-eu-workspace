@@ -281,7 +281,7 @@ submit_exploration()
 
 ------------------------------------------------------------------------
 
-::: {.callout-note title="Task 5 – My preregistration"}
+::: {.callout-note title="Task 5 – Preregistration"}
 A preregistration fixes your specification **before** you know its result, which stops you from quietly picking the one that happens to give the answer you wanted. In a real study it is filed, with a date stamp, in a public registry such as the OSF. In this report it is the cell below: every later cell reads your choices from it, and `build_model()` refuses model code that departs from them. Its numbered fields follow the preregistration template of AsPredicted in a shortened form, and field 2 also stands in for the prior-knowledge section of the template for secondary data (van den Akker et al. 2021).
 
 Make one choice on each decision of the specification menu, then run the cell. `claim_align <- TRUE` is the course convention, applied automatically: the claim expects framing to rise with GDP growth, so the sign of a growth slope is flipped, and 'supports the claim' reads as a negative sign for everyone.
