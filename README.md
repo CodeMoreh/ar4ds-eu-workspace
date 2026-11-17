@@ -2,29 +2,29 @@
 
 ## **What is this?**
 
-A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the robustness study of SCORE (Multi100), whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article – using the same data, tools, and workflow that the project used. You are analyst no. 6: you reproduce one of the three reanalyses that worked on aggregate data, chosen by you, and then work on the country-year panel that the facilitator built as one of the five analysts.
+A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the robustness study of SCORE (Multi100), whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article.
 
-The report you build is `index.qmd`. It renders out of the box: the data ship inside `data/`, so your very first `quarto preview` works with no edits and no network.
+The report that you build is `index.qmd`. It renders as it stands, because the data ship inside `data/`.
 
 ------------------------------------------------------------------------
 
 ## Setting up the workspace
 
-This workspace is a plain folder, with no version control and no account to sign in to. You download it, unzip it, and work inside it.
+This workspace is a plain folder, with no version control and no account to sign in to.
 
 1.  **Download the workspace.** On the GitHub page of the template, click the green **Code** button, then **Download ZIP** – or use the direct link `https://github.com/CodeMoreh/ar4ds-eu-workspace/archive/refs/heads/main.zip`. Save it somewhere you own (Desktop or Documents).
 
 2.  **Unzip it.** Extract the ZIP to a real folder (on Windows, "Extract All" – do not work inside the compressed preview). You will get a folder called `ar4ds-eu-workspace-main` containing `index.qmd`, `data/`, `R/`, and this file.
 
-3.  **Open the folder in your IDE.** In Positron or VS Code, **File → Open Folder…** and pick the unzipped folder; in RStudio, open `ar4ds-eu-workspace.Rproj`, which sits inside it. (Positron is the one that the walkthrough uses on the shared screen; any of the three works for every step.)
+3.  **Open the folder in your IDE.** In Positron or VS Code, **File → Open Folder…** and pick the unzipped folder; in RStudio, open `ar4ds-eu-workspace.Rproj`, which sits inside it.
 
-4.  **Restore the packages.** This workspace has no lockfile that pins package versions. Instead, `R/check_setup.R` checks what is installed and lists what is missing. In the R console:
+4.  **Restore the packages.** `R/check_setup.R` checks what is installed and lists what is missing. In the R console:
 
     ``` r
     source("R/check_setup.R")
     ```
 
-    It prints an `[OK]` / `[FAIL]` line per check (R version, Quarto, the required packages, the data files). If any packages are missing, it prints the one line that installs them. Run that line, then re-run the check.
+    It prints an `[OK]`, `[FAIL]` or `[SKIP]` line per check (R version, Quarto, the required packages, the data files), and a `[NOTE]` that names any package installed at another version than the course was tested with. If any packages are missing, it prints the one line that installs them. Run that line, then re-run the check.
 
 5.  **Open the report and preview it.** Open `index.qmd`, then in a terminal inside your IDE:
 
@@ -32,7 +32,7 @@ This workspace is a plain folder, with no version control and no account to sign
     quarto preview
     ```
 
-    The skeleton report opens in a browser. That is your starting point – now work through the tasks inside `index.qmd`.
+    The skeleton report opens in a browser. Then work through the tasks inside `index.qmd`.
 
 ------------------------------------------------------------------------
 
@@ -51,31 +51,27 @@ The GESIS terms of use prohibit processing these files, and anything built from 
 
 ## A note on version control
 
-This folder is kept free of git for the session. There is nothing to commit or push and no account to set up, so everyone in the class can get to the analysis in minutes, whatever their machine.
-
-The workspace *came from* a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control – and publishing the rendered report to a live URL – is the natural take-home step. A module on the course site goes through it click by click: **Git and GitHub** at <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders already in this workspace set up that route once the folder is a repository again. You can ignore them for the session.
+This folder is not a git repository, so there is nothing to commit or push and no account to set up. The workspace came from a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control and publishing the rendered report is the natural next step. The module **Git and GitHub** on the course site goes through it: <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
 
 ------------------------------------------------------------------------
 
-## What you will do today
+## The tasks
 
-The tasks in `index.qmd` map to the day's learning objectives:
+The tasks in `index.qmd`:
 
-- **The three Rs.** Distinguish reproducibility, robustness, and replicability – and say why the distinction matters. *(Task 1)*
-- **Meet the data.** Read the country-year panel and look at the outcome over time. *(Task 2)*
-- **State the estimand and encode it in a DAG.** Write the target quantity, then derive an adjustment set with `adjustmentSets()`. *(Task 2, continued)*
-- **Reproduce a recorded result.** Choose one of three analysts of the robustness study – C6HJR (t = −3.804), KQXUE (t = −7.169) or 018OL (t = −1.206) – and refit the analysis on its data until the value on record comes back. *(Task 3)*
-- **Work the specification menu.** Fit alternative specifications with `try_spec()`, compare them, and submit the one you would defend to the class chart with `submit_exploration()`, where it is labelled exploratory. *(Task 4)*
-- **Preregister, then build and run.** Complete the preregistration block, then translate it into a real fit and read the claim-aligned result. *(Task 5)*
-- **Locate yourself in the multiverse.** Submit your result with `report_result()` and find your circles among the others on the class chart by the tag that both submission functions print. *(Task 5, continued)*
-- **Go further.** Sweep a whole axis, test the mirror-image expectation, use GDP growth as the predictor, or read the full SCORE dossier. *(Going further)*
+- **Task 1.** The setup check, and the three Rs.
+- **Task 2.** The country-year panel, the estimand statement and the causal graph.
+- **Task 3.** The reproduction of a recorded result.
+- **Task 4.** The specification menu, and an exploratory result on the class chart.
+- **Task 5.** The preregistration, the fit and a declared result on the class chart.
+- **Going further.** Optional tasks.
 
 ------------------------------------------------------------------------
 
 ## Links
 
 - **Course site:** https://codemoreh.github.io/ar4ds-eu/
-- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled Google Form; open it and press **Send**, and the result appears on the live class chart at https://codemoreh.github.io/ar4ds-eu/class-results.html
+- **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled form, and the result appears on the live class chart at https://codemoreh.github.io/ar4ds-eu/class-results.html
 - **Take-home git/GitHub path:** https://codemoreh.github.io/ar4ds/git-github.html
 - **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
 

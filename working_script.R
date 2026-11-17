@@ -18,18 +18,10 @@
 # Writes:       – (prints results to the console; the submit helpers print a
 #               pre-filled form link)
 # Author:       Chris Moreh
-# Last updated: 2026-10-27
+# Last updated: 2026-11-17
 ##############################################################################
 
-# From Task 4 on, the code works on the country-year panel of analyst C6HJR,
-# the facilitator, adapted so it runs from the committed CSV alone. The
-# upstream data-preparation step, which assembles this panel from the raw GESIS
-# Eurobarometer waves, is the read-only exhibit prep/prep_exhibit.R. It needs
-# raw files that are not shipped here. Every function is called with the name of its package, so that
-# you can see where each one comes from.
-
-# The one working object, and the helpers that explore, preregister, build,
-# run and report a specification.
+# The country-year panel, and the helpers of Tasks 4 and 5.
 europeanisation <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 source("R/spec_tools.R")
 
@@ -75,19 +67,11 @@ print(parameters::model_parameters(m_018ol, effects = "fixed", ci_method = "satt
 
 ## ---- Task 4: work the menu ------------------------------------------------
 
-# The specification that you submit with submit_exploration() at the end of
-# this task is labelled exploratory on the class chart. The one labelled
-# declared is fixed later, in the Task 5 preregistration, before it is fitted.
-# Both carry the tag that submit_exploration() prints and keeps in .class-tag;
-# submit_exploration(nickname = "...") sets your own (a nickname, not your name).
-# try_spec() takes one argument per decision of the menu, and every one
+# try_spec() takes one argument for each decision of the menu, and every one
 # defaults to the reproduced specification, the model of C6HJR in Task 3, so
-# changing one thing means changing one argument. The arguments for decisions
-# about the question change the question, the measurement arguments select
-# which version of the panel is fitted, and pred_form, a decision about the
-# model, sets the form of the predictor. Each call prints the conventional
-# fit, the CR2 p-value with its Satterthwaite df, the class of the result and
-# its placement among the 864 specifications on the curve.
+# changing one decision means changing one argument. Each call prints the
+# conventional fit, the CR2 p-value with its Satterthwaite df, the class of
+# the result and its placement among the 864 specifications on the curve.
 try_spec()                              # the reproduced specification itself
 try_spec(outcome     = "mpos")          # the composite of both positive framings
 try_spec(estimator   = "fe_country")    # country effects only: changes common to all of Europe stay in
@@ -102,24 +86,22 @@ try_spec(measure     = "es_2064_pop")   # a Eurostat unemployment series instead
 try(try_spec(estimator = "pooled_cl"))  # pooled OLS
 try(try_spec(sample = "no_bailout"))    # without the eight bailout countries
 
-# The running log of everything you have tried, a small multiverse of your
-# own. Only the decisions that varied are printed.
+# Everything that you have tried, side by side, with only the decisions that
+# varied.
 my_experiments()
 
-# Send the most recent one to the class chart, labelled as exploration.
+# Send the most recent one to the class chart, labelled exploratory, with the
+# tag that the call prints and keeps in .class-tag;
+# submit_exploration(nickname = "...") sets your own (a nickname, not your name).
 submit_exploration()
 
 ## ---- Task 5: preregister one specification --------------------------------
 
-# One choice on each of the fourteen decisions. The seven decisions about the
-# question fix what you are asking, the four measurement decisions fix how that
-# question is measured, and the three decisions about the model fix how it is
-# estimated. The curve keeps two or more
-# options on nine decisions and one option on the other five; an option that
-# is not on the curve stops prereg() with the reason why. claim_align = TRUE
-# is the course convention, applied automatically: the claim expects framing
-# to rise with GDP growth, so the sign of a growth slope is flipped, and
-# 'supports the claim' is a negative sign.
+# One choice on each of the fourteen decisions; an option that is not on the
+# curve stops prereg() with the reason why. claim_align = TRUE is the course
+# convention, applied automatically: the claim expects framing to rise with
+# GDP growth, so the sign of a growth slope is flipped, and 'supports the
+# claim' is a negative sign.
 
 # The question (each of these changes what is being estimated)
 my_outcome      <- "mcosmo"       # mcosmo | mutil | mpos   (the positive framings)
@@ -151,14 +133,11 @@ prereg()   # checks every choice against the menu and prints your preregistratio
 
 # Translate the preregistered specification into model syntax yourself: the
 # outcome, the right-hand side, the estimator code. build_model() refuses
-# anything that does not match the preregistration. run_spec() then expands
-# the estimator code into the real fixest call, fitted on the version of the
-# panel that the measurement choices select, and computes its CR2 test.
+# anything that does not match the preregistration, and run_spec() then fits
+# the specification and computes its CR2 test.
 my_model <- build_model(mcosmo ~ unemp, estimator = "fe_twoway")
 run_spec(my_model)
 
-# report_result() needs no arguments, works from the preregistration and
-# reuses the tag from Task 4. It refits the model, builds the spec label, and
-# always submits on the claim-aligned scale on which the chart is drawn. Open
-# the printed link and press Send.
+# report_result() works from the preregistration and reuses the tag from
+# Task 4. Open the printed link and press Send.
 report_result()
