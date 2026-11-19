@@ -2,10 +2,9 @@
 # EXHIBIT ONLY – the independent workshop build that produced data/europeanisation_cy.csv.
 # Do NOT run it here: like the as-submitted prep script it needs the raw GESIS
 # Eurobarometer scientific-use files (registration required, not redistributable).
-# The paths below (rawdir, outdir_*) are the coordinator's own local machine
-# paths and will not exist on yours – they are left in deliberately so you can
-# see exactly how the panel was built. Reading this script side by side with
-# prep_exhibit.R repays the effort; the codebook's wave inventory is the map.
+# The paths below (rawdir, outdir_*) are those of the machine on which the
+# panel was built. The wave inventory of the codebook maps the waves of this
+# script and of prep_exhibit.R.
 # ============================================================================
 
 # ============================================================================

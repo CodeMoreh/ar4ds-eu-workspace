@@ -6,9 +6,9 @@
 #               items with the "other" and "don't know" codes beside them, the
 #               design weight, and the respondent characteristics that the
 #               published models use (age, sex, education, occupation,
-#               urbanisation, left–right placement). Nothing is scored here.
-#               The framing scales are built in prep/02_scales_and_panel.R,
-#               which is where the course teaches them. Every file is checked
+#               urbanisation, left–right placement). Nothing is scored here:
+#               the framing scales are built in prep/02_scales_and_panel.R.
+#               Every file is checked
 #               against the version and the checksum of the file from which
 #               the course panel was built, and any mismatch is listed in the
 #               build report. The row counts per country-year are also
@@ -19,7 +19,7 @@
 #               never committed, uploaded, shared or passed to an AI assistant
 #               data_private/build_report.csv – the per-file check table
 # Author:       Chris Moreh
-# Last updated: 2026-10-26
+# Last updated: 2026-11-19
 ##############################################################################
 
 # --- where the files are ------------------------------------------------------
@@ -29,7 +29,7 @@
 # written with forward slashes: "C:/Users/you/Eurobarometer".
 raw_dir <- Sys.getenv("EB_RAW_DIR", unset = "../eurobarometer_raw")
 
-# --- the sixteen studies used by the course ----------------------------------
+# --- the sixteen studies -------------------------------------------------------
 # One row per wave: the name under which GESIS serves the file, the study
 # number, the fieldwork year to which the course assigns the wave, the column
 # holding the country, where the EU-meaning block starts (v-numbered files) or
@@ -171,9 +171,7 @@ read_wave <- function(w, path) {
   stopifnot("EU-meaning items are not coded 0/1" = all(vals %in% c(0, 1)))
 
   # Germany and the United Kingdom are sampled as two regions each; the
-  # published analysis treats each as one country. dplyr::mutate(), because
-  # the values name the argument w, which datawizard::data_modify() does not
-  # find inside a function.
+  # published analysis treats each as one country
   d |>
     dplyr::mutate(cntry = as.character(cntry),
                   cntry = datawizard::recode_values(cntry, recode = list(DE = c("DE-E", "DE-W"),
@@ -195,8 +193,7 @@ respondents <- dplyr::bind_rows(waves)
 # preparation replaces 98 with the respondent's current age and sets 97 to
 # missing, then cuts three bands at 16 and 20. The four-band version keeps the
 # students as a band of their own and folds "none" into the lowest band, which
-# is the coding offered by the GESIS recode. Both are kept, so the choice
-# between them is yours to make on the menu.
+# is the coding offered by the GESIS recode. Both are kept.
 #
 # Socio-economic position collapses the eighteen-category occupation item into
 # the eight groups of the published models, with the unemployed as their own
@@ -234,12 +231,10 @@ respondents <- respondents |>
   datawizard::data_select(exclude = c("gender", "occ"))
 
 # --- 4. the checks ---------------------------------------------------------------
-# Three things are compared with the files that ship with the course. The
-# checksum tests whether each file is, byte for byte, the one from which the
-# panel was built. The cell count tests whether the same respondents are in the
-# same country-years, and the no-opinion count whether the closing codes were
-# read from the right columns. All three should agree exactly, and the report
-# lists where they do not.
+# Three comparisons, all of which should agree exactly: the checksum of each
+# file against that of the file from which the panel was built; the respondent
+# count of each country-year; and the no-opinion counts, which test that the
+# closing codes were read from the right columns.
 panel   <- readr::read_csv("data/europeanisation_cy.csv", show_col_types = FALSE)
 weights <- readr::read_csv("data/teney_panel_weights.csv", show_col_types = FALSE)
 
@@ -283,8 +278,8 @@ report <- tibble::tibble(
 )
 
 # --- 5. write --------------------------------------------------------------------
-# data_private/ is ignored by git in this workspace. Keep it that way: the file
-# below is derived from licensed microdata and stays on your machine.
+# data_private/ is ignored by git: the file is derived from licensed microdata
+# and stays on this machine.
 dir.create("data_private", showWarnings = FALSE)
 saveRDS(respondents, "data_private/eb_respondents.rds")
 readr::write_csv(file_report, "data_private/build_report.csv")
@@ -297,10 +292,9 @@ file_report |>
 print(as.data.frame(report), row.names = FALSE, right = FALSE)
 if (all(file_report$identical_to_course_file) &&
     report$value[5] == nrow(panel) && report$value[6] == nrow(panel)) {
-  writeLines("Every check passed: your file is the one from which the course panel was built.")
+  writeLines("Every check passed: the file matches the one from which the course panel was built.")
 } else {
-  writeLines(paste0("At least one check differs. A checksum difference means GESIS has ",
-                    "re-released that file. A cell difference means that the respondents read here ",
-                    "are not the ones in the course panel. Compare data_private/build_report.csv ",
-                    "with the inventory above, and bring the report to the session."))
+  writeLines(paste0("At least one check differs; see data_private/build_report.csv. A checksum ",
+                    "difference means that GESIS has re-released the file, a cell difference that ",
+                    "the respondents read here differ from those of the course panel."))
 }

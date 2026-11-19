@@ -1,31 +1,27 @@
 ##############################################################################
 # Title:        dag_starter.R – the half-built DAG for the claim under test
-# Purpose:      The object you complete in Task 2. It encodes the identification
-#               assumptions behind the claim "national unemployment lowers
-#               cosmopolitan EU framing": the causal path of interest and the
-#               two assumed confounder pairs are drawn, and the more arguable
-#               arrows are written into the same call but commented out.
-#               Uncomment the ones you believe, re-source, and read the
-#               adjustment set off the graph with dagitty::adjustmentSets().
+# Purpose:      The graph of Task 2 for the claim "national unemployment lowers
+#               cosmopolitan EU framing": the path of interest and the two
+#               confounder pairs are drawn, and the arguable arrows are in the
+#               same call, commented out. Uncomment the ones you hold, source
+#               the file again and read the adjustment set with
+#               dagitty::adjustmentSets().
 # Author:       Chris Moreh
-# Last updated: 2026-11-15
+# Last updated: 2026-11-19
 # Sourced by:   index.qmd (Task 2)
 ##############################################################################
 
-# A short vocabulary, because the whole exercise depends on these three terms:
-#   confounder – a common cause of BOTH exposure and outcome; ADJUST for it,
-#                because leaving it out biases the estimate.
-#   mediator   – sits ON the path from exposure to outcome; do NOT adjust when
-#                you want the TOTAL effect, since adjusting removes part of it.
-#   collider   – a common EFFECT of two variables; adjusting OPENS a spurious
-#                path, so leave colliders alone unless you know what you are
-#                doing.
+#   confounder – a common cause of exposure and outcome: adjusting for it
+#                removes its bias
+#   mediator   – on the path from exposure to outcome: adjusting for it removes
+#                part of the total effect
+#   collider   – a common effect of two variables: adjusting for it opens a
+#                spurious path
 
 # --- Where the nodes sit ----------------------------------------------------
-# The exposure is on the left, the outcome on the right, the two assumed
-# confounders above and the arguable nodes below, so that an uncommented edge
-# is drawn without crossing the rest of the figure. Coordinates for nodes that
-# no arrow mentions are ignored until you bring the node into the graph.
+# The exposure on the left, the outcome on the right, the confounders above and
+# the arguable nodes below; the coordinates of a node that no arrow names are
+# ignored.
 coords <- list(
   x = c(unemployment = 0, framing = 3,
         country = 1, year = 2,
@@ -36,59 +32,46 @@ coords <- list(
 )
 
 # --- The graph --------------------------------------------------------------
-# Each arrow is an ordinary R formula, written EFFECT ~ CAUSE – the same
-# direction you read a regression in, and the reverse of how an arrow is drawn.
-# So `framing ~ unemployment` is the arrow unemployment -> framing. With one
-# arrow per line, a leading # switches an arrow off and takes its comma with
-# it. In Task 2 you switch arrows on and off in this way.
-#
-# A node exists only if some arrow mentions it, so the candidates below stay off
-# the plot until you commit to one.
+# One arrow per line, as a formula written effect ~ cause: framing ~
+# unemployment is the arrow unemployment -> framing. A leading # switches an
+# arrow off, with its comma. A node exists only if some arrow names it.
 dag <- ggdag::dagify(
   # The causal path of interest.
   framing ~ unemployment,
 
-  # Country-constant traits (history, size, EU tenure) drive both the local
-  # labour market and how people there frame the EU. These two arrows are the
-  # first confounder pair.
+  # Country-constant traits (history, size, EU tenure): the first confounder
+  # pair.
   unemployment ~ country,
   framing ~ country,
 
-  # EU-wide shocks in a given year, such as the crisis and other common events,
-  # move both, and these two arrows are the second confounder pair. Country and
-  # year fixed effects absorb both pairs, which is why adjustmentSets() returns
-  # { country, year } and why the two-way fixed-effects model in Task 3 IS that
-  # adjustment set.
+  # EU-wide shocks of a year, such as the crisis: the second confounder pair.
+  # Country and year fixed effects absorb both pairs, so adjustmentSets()
+  # returns { country, year }, the adjustment of the two-way fixed-effects model
+  # of Task 3.
   unemployment ~ year,
   framing ~ year,
 
-  # ----- Arrows you may or may not believe (TASK 2) -----
-  # Each one is a substantive claim about the world, not a modelling detail. Take
-  # the # off the arrows you hold, re-source this file, and check how the
-  # adjustment set changes.
+  # ----- The arguable arrows (Task 2) -----
+  # Each is a claim about the world.
 
-  # GROWTH as a TIME-VARYING confounder: a slump raises unemployment and may sour
-  # EU sentiment in the same year, opening a back-door path that fixed effects
-  # cannot close, because they remove only country-constant and year-common
-  # variation.
+  # GROWTH as a time-varying confounder: a slump raises unemployment and may
+  # sour EU sentiment in the same year, a back-door path that the fixed effects
+  # do not close.
   # unemployment ~ growth,
   # framing ~ growth,
 
-  # BAILOUT as a MEDIATOR: unemployment triggers a financial-assistance
-  # programme, which then shapes framing. Adjusting for a mediator strips out
-  # part of the very effect you are after, so leave it unadjusted if your
-  # estimand is the total effect.
+  # BAILOUT as a mediator: unemployment triggers a financial-assistance
+  # programme, which then shapes framing.
   # bailout ~ unemployment,
   # framing ~ bailout,
 
   # POLITICISATION of the EU by parties and elites as a cause of framing alone,
-  # with no route into unemployment. The robustness study instructed analysts to disregard
-  # it; is that defensible here?
+  # with no route into unemployment; the robustness study instructed analysts
+  # to disregard it.
   # framing ~ politicisation,
 
-  # The year and the country driving growth itself. This only changes anything
-  # once the two growth arrows above are also uncommented, and then it makes
-  # growth a descendant of the things that the fixed effects already absorb.
+  # Year and country as causes of growth, which matter only with the two growth
+  # arrows switched on.
   # growth ~ year,
   # growth ~ country,
 
@@ -98,15 +81,13 @@ dag <- ggdag::dagify(
 )
 
 # --- Draw it ----------------------------------------------------------------
-# One call for the report. Node names are too long to fit inside circles, so
-# each node is drawn as a labelled box. Colour marks the exposure and the
-# outcome, and every other node is grey. The canvas is a tinyplot (McDermott,
-# Arel-Bundock and Zeileis, tinyplot, CRAN, doi:10.32614/CRAN.package.tinyplot),
-# and the arrows and boxes are drawn on it with the base graphics under it.
+# Each node a labelled box: the exposure blue, the outcome red, the rest grey.
+# The canvas is a tinyplot (McDermott, Arel-Bundock and Zeileis, tinyplot,
+# CRAN, doi:10.32614/CRAN.package.tinyplot); the arrows and boxes are base
+# graphics.
 plot_dag <- function(d = dag) {
   xy <- dagitty::coordinates(d)
-  # only the nodes that some arrow mentions are in the graph; dplyr::mutate(),
-  # because the columns are built from the arguments of this function
+  # the nodes named by some arrow
   nodes <- tibble::tibble(name = names(d)) |>
     dplyr::mutate(
       x = xy$x[name], y = xy$y[name],
@@ -119,10 +100,7 @@ plot_dag <- function(d = dag) {
   tinyplot::tinyplot(y ~ x, data = nodes, type = "n", axes = FALSE, frame.plot = FALSE, grid = FALSE,
                      xlab = "", ylab = "", xlim = range(nodes$x) + c(-0.5, 0.5),
                      ylim = range(nodes$y) + c(-0.6, 0.3))
-  # Labelled boxes, because a name like "unemployment" does not fit inside any
-  # circle small enough to leave the arrows visible; each arrow stops where it
-  # meets the box of the node that it points to, and starts where it leaves the
-  # box of the node that it comes from.
+  # each arrow runs from the edge of one box to the edge of the other
   w <- graphics::strwidth(nodes$name, font = 2) / 2 + graphics::strwidth("m")
   h <- graphics::strheight(nodes$name, font = 2) / 2 + graphics::strheight("m") / 2
   dx <- nodes$x[to] - nodes$x[from]

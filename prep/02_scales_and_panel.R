@@ -9,15 +9,14 @@
 #               rebuilt panel is compared with data/europeanisation_cy.csv, which it
 #               reproduces to machine precision when the respondent file has
 #               passed its checks. The last section builds the panel by
-#               education band, which the individual-level extension of the
-#               course uses.
+#               education band.
 # Reads:        data_private/eb_respondents.rds
 #               data/europeanisation_cy.csv, data/predictor_measures.csv,
 #               data/teney_panel_weights.csv
 # Writes:       data_private/europeanisation_cy_rebuilt.csv
 #               data_private/europeanisation_cy_edu.csv
 # Author:       Chris Moreh
-# Last updated: 2026-11-15
+# Last updated: 2026-11-19
 ##############################################################################
 
 respondents <- readRDS("data_private/eb_respondents.rds")
@@ -39,23 +38,18 @@ items <- c(items, list(pos = c(items$cosmo, items$util), neg = c(items$comm, ite
 items13 <- c(items$pos, items$neg)
 
 # --- 2. three scoring rules ------------------------------------------------------
-# A respondent's answers to a set of items can be turned into one number in
-# more than one way, and the course menu offers three. The share is the
-# published rule: the mentions from the set over the respondent's own total.
-# The count is the number of items in the set that were mentioned. The
-# per-item rate is the count over the number of items in the set. Which of
-# the three you use is a decision about what the outcome is, and the
-# specification menu treats it as one.
+# The share (the published rule) is the mentions from the set over the
+# respondent's own total, the count the number of items of the set mentioned,
+# and the per-item rate the count over the number of items of the set; the
+# choice is a decision of the specification menu.
 #
-# A respondent who mentioned none of the thirteen items has no total to divide
-# by. The course panel scores them zero on every scale, as analyst C6HJR did;
-# the code of the original study left them out, because it divided by a total
-# of zero. The other rules on the menu (drop, split, impute) are applied
-# further down the pipeline and are explained in the module on scale
-# construction.
+# A respondent who mentioned none of the thirteen items is scored zero on every
+# scale, as analyst C6HJR scored them; the code of the original study left
+# them out, dividing by a total of zero. The other rules of the menu (drop,
+# split, impute) are applied later in the pipeline.
 #
-# The three columns of each scale are added scale by scale: c_ the count, s_
-# the share and r_ the per-item rate.
+# Each scale gets three columns: c_ the count, s_ the share and r_ the
+# per-item rate.
 scored <- names(items) |>
   purrr::reduce(\(d, s) {
     d |>
@@ -66,11 +60,10 @@ scored <- names(items) |>
                            n_all = datawizard::row_sums(dplyr::pick(dplyr::all_of(items13)))))
 
 # --- 3. from respondents to country-years -----------------------------------------
-# The course panel averages every respondent in a country-year with the same
-# weight ('as interviewed'). The design weight w1, which GESIS supplies to
-# correct each national sample to its population, is the other choice, and the
-# decision Cell weighting of the specification menu compares the two. Both
-# are computed here.
+# Each cell mean twice: unweighted ('as interviewed'), as in the course panel,
+# and with the design weight w1, which GESIS supplies to correct each national
+# sample to its population; the decision Cell weighting of the specification
+# menu compares the two.
 cells <- scored |>
   dplyr::summarise(
     dplyr::across(dplyr::starts_with("s_"), mean, .names = "m{.col}"),
@@ -84,21 +77,18 @@ cells <- scored |>
   dplyr::rename_with(\(x) sub("^mc_", "c_m", x), dplyr::starts_with("mc_"))
 
 # --- 4. the macro series ----------------------------------------------------------
-# The unemployment rate in the panel is the national estimate from the World
-# Bank (SL.UEM.TOTL.NE.ZS), and the growth series is annual GDP growth from the
-# same source (NY.GDP.MKTP.KD.ZG). Both are open data. Every series offered on
-# the menu ships with the course in data/predictor_measures.csv, so the merge
-# below works offline. The same two series can be fetched live with the WDI
-# package:
+# The national unemployment estimate of the World Bank (SL.UEM.TOTL.NE.ZS) and
+# annual GDP growth from the same source (NY.GDP.MKTP.KD.ZG), open data, read
+# from data/predictor_measures.csv, which holds every series of the menu. The
+# same two series can be fetched with the WDI package:
 #
 #   WDI::WDI(country = unique(cells$cntry),
 #            indicator = c(unemp = "SL.UEM.TOTL.NE.ZS", growth = "NY.GDP.MKTP.KD.ZG"),
 #            start = 2004, end = 2013)
 #
-# and the Eurostat alternatives with eurostat::get_eurostat(). A live fetch may
+# and the Eurostat series with eurostat::get_eurostat(); a live fetch may
 # differ from the committed values in the last decimals, because the Bank
-# revises past years. The committed file records the vintage that the course
-# used.
+# revises past years.
 macro <- measures |>
   datawizard::data_filter(measure %in% c("wb_nat", "wb_growth")) |>
   datawizard::data_select(select = c("cntry", "year", "predictor", "value")) |>
@@ -147,10 +137,8 @@ print(as.data.frame(differences), row.names = FALSE, right = FALSE)
 print(as.data.frame(weighted_differences), row.names = FALSE, right = FALSE)
 
 # --- 6. the panel by education band ---------------------------------------------------
-# The individual-level extension asks whether unemployment narrows the gap
-# between education bands. That question can be put to aggregates too: one row
-# per country, year and band, with the same six scales and the number of
-# respondents behind each mean, which is what a precision weight uses.
+# One row per country, year and education band, with the six scales and the
+# number of respondents behind each mean, the base of a precision weight.
 by_edu <- scored |>
   datawizard::data_filter(!is.na(edu3)) |>
   dplyr::summarise(dplyr::across(dplyr::starts_with("s_"), mean, .names = "m{.col}"),

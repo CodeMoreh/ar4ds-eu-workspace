@@ -84,7 +84,7 @@ The **country-year panel** (`data/europeanisation_cy.csv`) is loaded as `europea
 
 ```{r}
 #| label: count-data
-# How many countries, how many years, how big is the panel?
+# rows, countries and years of the panel
 europeanisation |>
   datawizard::data_summary(
     countries = insight::n_unique(cntry),
@@ -144,7 +144,7 @@ plot_dag(dag)
 
 ```{r}
 #| label: adjustment-set
-# What must we adjust for to identify the unemployment -> framing effect?
+# the adjustment set for the effect of unemployment on framing
 dagitty::adjustmentSets(dag, exposure = "unemployment", outcome = "framing")
 ```
 
@@ -175,13 +175,11 @@ This is the **reproducibility** check. Three of the five analysts of the robustn
 
 ```{r}
 #| label: fit-corrected
-# Grand-mean centre unemployment, as the submitted analysis did. With
-# two-way fixed effects this shifts the intercept, not the slope or the t – it
-# is the transformation that the recorded specification uses, so do it
-# explicitly.
+# unemployment centred on its grand mean, as in the submitted analysis; with
+# two-way fixed effects only the intercept moves
 europeanisation <- europeanisation |> datawizard::data_modify(unemp_c = unemp - mean(unemp, na.rm = TRUE))
 
-# fixest::feols – the bar separates the regression from the fixed effects.
+# the part after the | adds the fixed effects
 m1 <- fixest::feols(mcosmo ~ unemp_c | cntry + year, data = europeanisation, vcov = "iid")
 
 parameters::model_parameters(m1)

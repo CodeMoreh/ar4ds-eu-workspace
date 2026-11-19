@@ -18,7 +18,7 @@
 # Writes:       – (prints results to the console; the submit helpers print a
 #               pre-filled form link)
 # Author:       Chris Moreh
-# Last updated: 2026-11-17
+# Last updated: 2026-11-19
 ##############################################################################
 
 # The country-year panel, and the helpers of Tasks 4 and 5.
@@ -67,11 +67,8 @@ print(parameters::model_parameters(m_018ol, effects = "fixed", ci_method = "satt
 
 ## ---- Task 4: work the menu ------------------------------------------------
 
-# try_spec() takes one argument for each decision of the menu, and every one
-# defaults to the reproduced specification, the model of C6HJR in Task 3, so
-# changing one decision means changing one argument. Each call prints the
-# conventional fit, the CR2 p-value with its Satterthwaite df, the class of
-# the result and its placement among the 864 specifications on the curve.
+# try_spec() takes one argument for each decision of the menu, each defaulting
+# to the reproduced specification, the model of C6HJR in Task 3.
 try_spec()                              # the reproduced specification itself
 try_spec(outcome     = "mpos")          # the composite of both positive framings
 try_spec(estimator   = "fe_country")    # country effects only: changes common to all of Europe stay in
@@ -80,28 +77,24 @@ try_spec(copredictor = "other")         # adjusted for the other economic measur
 try_spec(noop        = "drop")          # leave out the respondents who mentioned no frame
 try_spec(measure     = "es_2064_pop")   # a Eurostat unemployment series instead of the World Bank one
 
-# Options that are not on the curve are refused with the reason why and the
-# page of the course site that teaches them; try() prints the refusal and lets
-# the rest of the script run.
+# Options off the curve are refused with the reason and the page that teaches
+# them; try() prints the refusal and lets the script run on.
 try(try_spec(estimator = "pooled_cl"))  # pooled OLS
 try(try_spec(sample = "no_bailout"))    # without the eight bailout countries
 
-# Everything that you have tried, side by side, with only the decisions that
-# varied.
+# The specifications tried, with the decisions that varied
 my_experiments()
 
-# Send the most recent one to the class chart, labelled exploratory, with the
-# tag that the call prints and keeps in .class-tag;
-# submit_exploration(nickname = "...") sets your own (a nickname, not your name).
+# The last one to the class chart, labelled exploratory, with the tag kept in
+# .class-tag; submit_exploration(nickname = "...") sets another.
 submit_exploration()
 
 ## ---- Task 5: preregister one specification --------------------------------
 
-# One choice on each of the fourteen decisions; an option that is not on the
-# curve stops prereg() with the reason why. claim_align = TRUE is the course
-# convention, applied automatically: the claim expects framing to rise with
-# GDP growth, so the sign of a growth slope is flipped, and 'supports the
-# claim' is a negative sign.
+# One choice on each of the fourteen decisions; an option off the curve stops
+# prereg() with the reason. With claim_align = TRUE the sign of a growth slope
+# is flipped, since the claim expects framing to rise with GDP growth, so that a
+# negative sign supports the claim.
 
 # The question (each of these changes what is being estimated)
 my_outcome      <- "mcosmo"       # mcosmo | mutil | mpos   (the positive framings)
@@ -131,13 +124,12 @@ prereg()   # checks every choice against the menu and prints your preregistratio
 
 ## ---- Task 5, continued: build, run and report -----------------------------
 
-# Translate the preregistered specification into model syntax yourself: the
-# outcome, the right-hand side, the estimator code. build_model() refuses
-# anything that does not match the preregistration, and run_spec() then fits
-# the specification and computes its CR2 test.
+# The preregistered specification as a formula and an estimator code;
+# build_model() refuses anything that does not match the preregistration, and
+# run_spec() fits it with its CR2 test.
 my_model <- build_model(mcosmo ~ unemp, estimator = "fe_twoway")
 run_spec(my_model)
 
-# report_result() works from the preregistration and reuses the tag from
-# Task 4. Open the printed link and press Send.
+# The preregistered specification to the class chart, with the tag of Task 4;
+# open the printed address and press Send.
 report_result()
