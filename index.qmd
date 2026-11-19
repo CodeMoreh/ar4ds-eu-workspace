@@ -50,7 +50,7 @@ The original author (OA) studied how citizens frame the European Union. One clai
 
 > "… poor economic performances … decrease positive dimensions of EU framing" (Teney 2016: 619)
 
-Operationalised the way that the robustness study of SCORE (Multi100; Aczel et al. 2026) constrained it for its five analysts: does a country's **unemployment rate** (poor economic performance) lower the **cosmopolitan** dimension of EU framing (peace, democracy, free movement, cultural diversity, a stronger say in the world)? The published result was a coefficient of −0.0034, t = −4.03.
+Operationalised the way that the SCORE robustness study (Aczel et al. 2026) constrained it for its five analysts: does a country's **unemployment rate** (poor economic performance) lower the **cosmopolitan** dimension of EU framing (peace, democracy, free movement, cultural diversity, a stronger say in the world)? The published result was a coefficient of −0.0034, t = −4.03.
 
 You are analyst no. 6, and the question is how robust the published number is to *justifiable* alternative choices. Work through the five tasks below in order.
 
@@ -360,7 +360,7 @@ Now send it to the class chart. `report_result()` prints your submission line an
 report_result()
 ```
 
-If the form will not open on your machine, read the printed numbers to the facilitator and your dot will still be added.
+If the form will not open on your machine, read the printed numbers to the facilitator, who adds your dot.
 
 **A second declared specification?** Edit the preregistration cell, rerun `prereg()`, rebuild and rerun. The chart still labels it declared, but it was chosen after a result was known, as the specifications of Task 4 were, so say so when you report it.
 
@@ -379,7 +379,7 @@ Each of these is a real fit that you can run in this workspace if you have time 
 
 - **Beyond unemployment.** Preregister `my_predictor <- "growth"` with `my_measure <- "wb_growth"` (GDP growth, which four of the five analysts used when the robustness study left the choice of measure to them): the claim now predicts a *positive* growth coefficient on the positive framings, and the sign convention flips automatically. Refitted on the country-year panel, the model that analyst C6HJR chose in Task 1 of the robustness study, `mpos ~ growth + unemp` with two-way fixed effects, gives a growth coefficient of b = +`r sprintf("%.5f", growth_row$b)`, t = `r sprintf("%.2f", growth_row$t)` on `r growth_row$df` df and a CR2 p of `r sprintf("%.3f", growth_row$p_cr2)`, which is not significant.
 
-- **The full SCORE dossier.** OA's paper went through all three Rs in the SCORE programme and got three different verdicts: its push-button reproduction **failed** (the author-provided Stata code referenced file names that did not match what was available), its reproduction from the source data was recorded as **not reproduced**, and its preregistered replication on later Eurobarometer waves was judged **not successful** (a positive coefficient, opposite in sign to the claim and not significant). Explore reproduction, robustness, and replication side by side at <https://osf.io/h7432/>.
+- **The full SCORE dossier.** OA's paper went through all three Rs in the SCORE programme and got three different verdicts: its push-button reproduction in the SCORE reproducibility study **failed** (the author-provided Stata code referenced file names that did not match what was available), its reproduction from the source data was recorded as **not reproduced**, and its preregistered replication in the SCORE replicability study, on later Eurobarometer waves, was judged **not successful** (a positive coefficient, opposite in sign to the claim and not significant). Explore reproduction, robustness, and replication side by side at <https://osf.io/h7432/>.
 :::
 
 ------------------------------------------------------------------------

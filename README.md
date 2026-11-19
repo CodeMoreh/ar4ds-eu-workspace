@@ -2,7 +2,7 @@
 
 ## **What is this?**
 
-A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the robustness study of SCORE (Multi100), whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article.
+A ready-to-run replication exercise for the course "Applied Replication for Data Skills". You reproduce one of the reanalyses from the SCORE robustness study, whose results were recently published in *Nature* (Aczel et al. 2026), and test the robustness of a published claim from the target article.
 
 The report that you build is `index.qmd`. It renders as it stands, because the data ship inside `data/`.
 
