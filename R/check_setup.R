@@ -1,5 +1,5 @@
 ##############################################################################
-# Title:        check_setup.R – does this machine have what the course needs?
+# Title:        check_setup.R – does this machine have what the workshop needs?
 # Purpose:      Check the R version, Quarto, the required packages and the data
 #               files of the workspace: one [OK], [FAIL] or [SKIP] line per
 #               check, a [NOTE] for each package at another version than that
@@ -73,17 +73,17 @@ tested <- tryCatch(
   error = function(e) NULL, warning = function(w) NULL
 )
 if (length(present) == 0 || is.null(tested)) {
-  skip("package versions not compared with those of the course (no connection)")
+  skip("package versions not compared with those of the workshop (no connection)")
 } else {
   differ <- present[vapply(present, function(p) utils::packageVersion(p) != tested[[p]], logical(1))]
   if (length(differ) == 0) {
-    ok(paste0(length(present), " packages at the versions of the course"))
+    ok(paste0(length(present), " packages at the versions of the workshop"))
   } else {
     writeLines(c(
-      paste0("[NOTE] ", length(differ), " package(s) at another version than the course:"),
+      paste0("[NOTE] ", length(differ), " package(s) at another version than the workshop:"),
       paste0("        ", differ, " ", vapply(differ, function(p) as.character(utils::packageVersion(p)), character(1)),
-             " (the course: ", tested[differ], ")"),
-      "        if an exercise fails, install the versions of the course:",
+             " (the workshop: ", tested[differ], ")"),
+      "        if an exercise fails, install the versions of the workshop:",
       sprintf(install_line, paste(differ, collapse = '", "'), course_repo)
     ))
   }

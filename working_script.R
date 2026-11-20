@@ -42,7 +42,7 @@ europeanisation |>
 # Choose one of the three analysts whose results rest on aggregate data and
 # step through its block; the codebooks in data/ say how each file was built.
 
-# C6HJR – two-way (country + year) fixed effects on the course panel, with
+# C6HJR – two-way (country + year) fixed effects on the workshop panel, with
 # unemployment centred on its grand mean, which shifts only the intercept. On
 # record: t = -3.804 on 233 df.
 europeanisation <- europeanisation |>
@@ -118,7 +118,7 @@ my_pred_form    <- "raw"          # raw | log   (growth: raw only; centring or z
 my_family       <- "gaussian"     # gaussian   (a linear model of the cell means)
 my_se           <- "cr2"          # cr2   (fixed: CR2 errors clustered by country)
 
-claim_align     <- TRUE           # the course convention, applied automatically
+claim_align     <- TRUE           # the workshop convention, applied automatically
 
 prereg()   # checks every choice against the menu and prints your preregistration
 
