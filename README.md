@@ -38,9 +38,9 @@ This workspace is a plain folder, with no version control and no account to sign
 
 ## The Eurobarometer files, for the individual-level work
 
-Everything above runs on the country-year panel in `data/`. The respondent-level data behind it are sixteen Eurobarometer surveys that GESIS distributes under terms that do not allow this workspace to include them, so they are downloaded under your own free GESIS account, into a folder outside the workspace. The workshop site lists the sixteen studies and walks through the download at https://codemoreh.github.io/ar4ds-eu/companion/data-sources.html#sec-gesis. Two scripts then do the rest:
+Everything above runs on the country-year panel in `data/`. The respondent-level data behind it are sixteen Eurobarometer surveys that GESIS distributes under terms that do not allow this workspace to include them, so they are downloaded under your own free GESIS account, into a folder outside the workspace. The workshop's website lists the sixteen studies and walks through the download at https://codemoreh.github.io/ar4ds-eu/companion/data-sources.html#sec-gesis. Two scripts then do the rest:
 
-- `prep/01_build_respondents.R` – set the folder path at the top, source it once. It checks every file against the version and checksum of the copy from which the workshop was built, reads the sixteen, harmonises the respondent characteristics, and writes `data_private/eb_respondents.rds`. That folder is ignored by git and must stay so: the file is licensed microdata, never to be shared or opened in a session that an AI assistant can read.
+- `prep/01_build_respondents.R` – set the folder path at the top, source it once. It checks every file against the version and checksum of the copy from which the country-year panel was built, reads the sixteen, harmonises the respondent characteristics, and writes `data_private/eb_respondents.rds`. That folder is ignored by git and must stay so: the file is licensed microdata, never to be shared or opened in a session that an AI assistant can read.
 - `prep/02_scales_and_panel.R` – read and run section by section. It builds the framing scales under the three scoring rules, averages respondents into country-years, merges the macro series, reproduces `data/europeanisation_cy.csv` to machine precision, and builds the panel by education band.
 
 The two scripts under `prep/` that begin "EXHIBIT ONLY" are the historical builds, kept for reading.
@@ -51,7 +51,7 @@ The GESIS terms of use prohibit processing these files, and anything built from 
 
 ## A note on version control
 
-This folder is not a git repository, so there is nothing to commit or push and no account to set up. The workspace came from a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control and publishing the rendered report is the natural next step. The module **Git and GitHub** on the workshop site goes through it: <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
+This folder is not a git repository, so there is nothing to commit or push and no account to set up. The workspace came from a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control and publishing the rendered report is the natural next step. The module **Git and GitHub** on the workshop's website goes through it: <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
 
 ------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ The tasks in `index.qmd`:
 
 ## Links
 
-- **Workshop site:** https://codemoreh.github.io/ar4ds-eu/
+- **Workshop website:** https://codemoreh.github.io/ar4ds-eu/
 - **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled form, and the result appears on the live class chart at https://codemoreh.github.io/ar4ds-eu/class-results.html
 - **Take-home git/GitHub path:** https://codemoreh.github.io/ar4ds/git-github.html
 - **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
@@ -84,7 +84,7 @@ This workspace is published as the "Use this template" repository `CodeMoreh/ar4
 - `.devcontainer/devcontainer.json` – a Codespaces / dev-container image (R + Quarto + the package list) so the repo can be opened and rendered in the cloud with no local install.
 - `.github/workflows/publish.yml` – renders the report and publishes it to GitHub Pages on every push, once **Settings → Pages → Source** is set to **"GitHub Actions"**. It installs R and re-runs the chunks, so a participant's edits show up.
 
-Neither is needed for the zip route used in class. Keep `data/` in sync with the `data/` folder of the workshop repository: `europeanisation_cy.csv` and its codebook are what the report reads directly, and `analyst_KQXUE.csv` and `analyst_018OL.csv`, with `analyst_panels_codebook.md`, are the data of the two other reproductions of Task 3. `teney_panel_measurement.csv` and `predictor_measures.csv` are the measurement variants of the panel and the published predictor series from which `R/spec_tools.R` fits every specification. `spec_curve.csv` (with `spec_curve_codebook.md`) is the curve of 864 specifications, from which the helpers read the placement of each fit and against which they check it, and `menu_options.csv` gives the reason for every option that is not on the curve. Each live fit computes its CR2 errors clustered by country, with Satterthwaite degrees of freedom, through the `clubSandwich` package, the rule that classes the curve, so it returns the stored p-value exactly. `teney_panel_weights.csv` is read by the two scripts in `prep/`.
+Neither is needed for the zip route used in class. Keep `data/` in sync with the `data/` folder of the workshop's GitHub repository, `CodeMoreh/ar4ds-eu`: `europeanisation_cy.csv` and its codebook are what the report reads directly, and `analyst_KQXUE.csv` and `analyst_018OL.csv`, with `analyst_panels_codebook.md`, are the data of the two other reproductions of Task 3. `teney_panel_measurement.csv` and `predictor_measures.csv` are the measurement variants of the panel and the published predictor series from which `R/spec_tools.R` fits every specification. `spec_curve.csv` (with `spec_curve_codebook.md`) is the curve of 864 specifications, from which the helpers read the placement of each fit and against which they check it, and `menu_options.csv` gives the reason for every option that is not on the curve. Each live fit computes its CR2 errors clustered by country, with Satterthwaite degrees of freedom, through the `clubSandwich` package, the rule that classes the curve, so it returns the stored p-value exactly. `teney_panel_weights.csv` is read by the two scripts in `prep/`.
 
 ------------------------------------------------------------------------
 

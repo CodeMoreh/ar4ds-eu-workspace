@@ -6,7 +6,7 @@
 #               announced by a message(): (1) the file is present, and nothing
 #               is fetched; (2) osfr fetches it from the main folder of OSF
 #               node 6zqct, the fork of the analyst; (3) the mirror on the
-#               workshop site, https://codemoreh.github.io/
+#               workshop's website, https://codemoreh.github.io/
 #               ar4ds-eu/data/europeanisation_cy.csv.
 #               The fork osf.io/6zqct ("Multi100 | Teney_EurSocioRev_2016 |
 #               Analyst_C6HJR") is maintained for teaching; the archival
@@ -49,19 +49,19 @@ get_data <- function(dest = "data/europeanisation_cy.csv") {
     return(invisible(dest))
   }
 
-  # --- Step 3: the mirror on the workshop site, outside the OSF -------------
-  message("[3/3] Trying the workshop site mirror …")
+  # --- Step 3: the mirror on the workshop's website, outside the OSF --------
+  message("[3/3] Trying the mirror on the workshop's website …")
   ok <- tryCatch({
     utils::download.file(
       "https://codemoreh.github.io/ar4ds-eu/data/europeanisation_cy.csv",
       dest, mode = "wb", quiet = TRUE)
     file.exists(dest) && file.size(dest) > 0
   }, error = function(e) {
-    message("      site mirror failed: ", conditionMessage(e))
+    message("      mirror failed: ", conditionMessage(e))
     FALSE
   })
   if (isTRUE(ok)) {
-    message("      fetched from the site mirror.")
+    message("      fetched from the mirror.")
     return(invisible(dest))
   }
 

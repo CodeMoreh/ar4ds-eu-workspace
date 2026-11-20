@@ -1,5 +1,5 @@
 # ============================================================================
-# EXHIBIT ONLY – the independent workshop build that produced data/europeanisation_cy.csv.
+# EXHIBIT ONLY – the workshop's independent build that produced data/europeanisation_cy.csv.
 # Do NOT run it here: like the as-submitted prep script it needs the raw GESIS
 # Eurobarometer scientific-use files (registration required, not redistributable).
 # The paths below (rawdir, outdir_*) are those of the machine on which the
@@ -8,7 +8,7 @@
 # ============================================================================
 
 # ============================================================================
-# Build the workshop panel (europeanisation_cy.csv) from raw Eurobarometer files
+# Build the country-year panel (europeanisation_cy.csv) from raw Eurobarometer files
 # - Full sixteen-wave build (per the codebook inventory) -> data/europeanisation_cy.csv
 # - A second variant reproducing the published artifact's
 #   wave set                                             -> _planning_data/ (comparison)
@@ -152,7 +152,7 @@ chk <- panel_pub |>
 cat("max |mcosmo - mcosmopolitan| all years :", max(abs(chk$mcosmo - chk$mcosmopolitan)), "\n")
 cat("max |n_cy - n_cy_pub|       all years :", max(abs(chk$n_cy - chk$n_cy_pub)), "\n")
 
-cat("\n--- Where the two builds differ (workshop rebuild vs published artifact) ---\n")
+cat("\n--- Where the two builds differ (the workshop's rebuild vs the published artifact) ---\n")
 imp <- panel_corr |> filter(year == 2009) |>
   inner_join(repdata |> filter(year == 2009) |> select(cntry, mcosmopolitan),
              by = "cntry")

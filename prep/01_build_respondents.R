@@ -10,7 +10,7 @@
 #               the framing scales are built in prep/02_scales_and_panel.R.
 #               Every file is checked
 #               against the version and the checksum of the file from which
-#               the workshop panel was built, and any mismatch is listed in the
+#               the country-year panel was built, and any mismatch is listed in the
 #               build report. The row counts per country-year are also
 #               checked against the committed panel.
 # Reads:        the sixteen .dta files in the folder named by EB_RAW_DIR
@@ -34,7 +34,7 @@ raw_dir <- Sys.getenv("EB_RAW_DIR", unset = "../eurobarometer_raw")
 # number, the fieldwork year to which the workshop assigns the wave, the column
 # holding the country, where the EU-meaning block starts (v-numbered files) or
 # the question stem that names its columns (qa-named files), the design-weight
-# column, and the MD5 checksum of the file from which the workshop panel was
+# column, and the MD5 checksum of the file from which the country-year panel was
 # built. GESIS serves ZA4506 and ZA4744 as .dta.zip archives, which the script
 # unzips into the same folder.
 inventory <- tibble::tribble(
@@ -264,7 +264,7 @@ file_report <- inventory |>
                 rows_eu27 = purrr::map_int(waves, nrow))
 
 report <- tibble::tibble(
-  check = c("files found", "files identical to the workshop build",
+  check = c("files found", "files identical to the workshop's build",
             "country-years in the committed panel", "country-years rebuilt",
             "cells with an identical respondent count",
             "cells with identical no-opinion counts (none, DK, other, blank)"),
@@ -292,9 +292,9 @@ file_report |>
 print(as.data.frame(report), row.names = FALSE, right = FALSE)
 if (all(file_report$identical_to_course_file) &&
     report$value[5] == nrow(panel) && report$value[6] == nrow(panel)) {
-  writeLines("Every check passed: the file matches the one from which the workshop panel was built.")
+  writeLines("Every check passed: the file matches the one from which the country-year panel was built.")
 } else {
   writeLines(paste0("At least one check differs; see data_private/build_report.csv. A checksum ",
                     "difference means that GESIS has re-released the file, a cell difference that ",
-                    "the respondents read here differ from those of the workshop panel."))
+                    "the respondents read here differ from those of the country-year panel."))
 }

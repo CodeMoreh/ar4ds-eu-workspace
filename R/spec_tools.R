@@ -17,7 +17,7 @@
 #               The menu has fourteen decisions, and the curve of the claim
 #               keeps 864 specifications of them. An option that is not on the
 #               curve stops with the reason recorded in data/menu_options.csv
-#               and the page of the workshop site that teaches it. Every
+#               and the page of the workshop's website that teaches it. Every
 #               specification on the curve is a live fit on the country-year
 #               panel that its measurement choices select, tested by CR2
 #               errors clustered by country with Satterthwaite df
@@ -102,7 +102,7 @@
 # reads the fourteen my_* choices and claim_align out of the calling
 # environment, which is how the declared flow reads the preregistration block.
 # An option that is not on the curve stops with the reason from
-# menu_options.csv, the page of the workshop that teaches it, and the options
+# menu_options.csv, the workshop's page that teaches it, and the options
 # that stay on the curve.
 # A taught_on path may end in the id of a section, which the titles key and
 # .page_ref() keeps in the address.

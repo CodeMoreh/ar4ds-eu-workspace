@@ -60,7 +60,7 @@ scored <- names(items) |>
                            n_all = datawizard::row_sums(dplyr::pick(dplyr::all_of(items13)))))
 
 # --- 3. from respondents to country-years -----------------------------------------
-# Each cell mean twice: unweighted ('as interviewed'), as in the workshop panel,
+# Each cell mean twice: unweighted ('as interviewed'), as in the country-year panel,
 # and with the design weight w1, which GESIS supplies to correct each national
 # sample to its population; the decision Cell weighting of the specification
 # menu compares the two.
@@ -104,7 +104,7 @@ rebuilt <- cells |>
   # dplyr::arrange() sorts in the C locale on every machine
   dplyr::arrange(cntry, year)
 
-# --- 5. comparison with the workshop panel -----------------------------------------
+# --- 5. comparison with the country-year panel -------------------------------------
 compare <- panel |>
   dplyr::inner_join(rebuilt, by = c("cntry", "year"), suffix = c("_course", "_rebuilt"))
 
