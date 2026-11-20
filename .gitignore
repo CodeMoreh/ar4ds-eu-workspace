@@ -7,13 +7,13 @@
 
 # Working notes for the facilitator and the assistant, never published. This
 # repository is public, so the file is ignored here as a mechanical backstop; if
-# one is ever needed in this workspace, it stays untracked.
+# one is ever needed in this IDE workspace, it stays untracked.
 CLAUDE.md
 
 # Respondent-level files built from the GESIS Eurobarometer downloads by
 # prep/01_build_respondents.R. They are derived microdata under the GESIS
 # terms of use and must never be committed, pushed or shared. The folder is
-# ignored as a backstop; the raw .dta files should live outside the workspace.
+# ignored as a backstop; the raw .dta files should live outside the IDE workspace.
 /data_private/
 
 # A second backstop, for files saved anywhere in the folder: the formats in
@@ -31,5 +31,5 @@ CLAUDE.md
 
 **/*.quarto_ipynb
 
-# The class-chart tag of this copy of the workspace (written by R/spec_tools.R)
+# The class-chart tag of this copy of the IDE workspace (written by R/spec_tools.R)
 .class-tag

@@ -1,7 +1,7 @@
 ##############################################################################
 # Title:        check_setup.R – does this machine have what the workshop needs?
 # Purpose:      Check the R version, Quarto, the required packages and the data
-#               files of the workspace: one [OK], [FAIL] or [SKIP] line per
+#               files of the IDE workspace: one [OK], [FAIL] or [SKIP] line per
 #               check, a [NOTE] for each package at another version than that
 #               of the package date, and a verdict. Changes nothing. Base R
 #               only, since it runs before any package is installed.
@@ -29,7 +29,7 @@ sys_out <- function(cmd, args) {
   if (length(out) == 0) "" else trimws(paste(out, collapse = " "))
 }
 
-writeLines("\n=== AR4DS workspace, the Europeanisation and the economy case study – setup check ===\n")
+writeLines("\n=== AR4DS IDE workspace, the Europeanisation and the economy case study – setup check ===\n")
 
 # --- 1. R version -----------------------------------------------------------
 if (getRversion() >= "4.4.0") {
@@ -98,7 +98,7 @@ data_files <- c("data/europeanisation_cy.csv", "data/teney_panel_measurement.csv
                 "data/analyst_018OL.csv", "data/rep_data.csv")
 for (f in data_files) {
   if (!file.exists(f)) {
-    fail(paste0("data file missing: ", f, " – run from the workspace root folder"))
+    fail(paste0("data file missing: ", f, " – run from the root folder of the IDE workspace"))
     next
   }
   n_rows <- tryCatch(nrow(utils::read.csv(f)), error = function(e) NA_integer_)
@@ -120,7 +120,7 @@ if (file.exists("data/europeanisation_cy_codebook.md")) {
 if (file.exists("index.qmd")) {
   ok("index.qmd present")
 } else {
-  fail("index.qmd not found – run this from the workspace root folder")
+  fail("index.qmd not found – run this from the root folder of the IDE workspace")
 }
 
 # --- verdict ----------------------------------------------------------------
@@ -132,7 +132,7 @@ if (.results$fail == 0) {
 } else {
   writeLines(c("\nFix each FAIL as its line says, then run this script again.",
                "Common failures and fixes: https://codemoreh.github.io/ar4ds/help.html",
-               "Without a working installation, the browser lab runs every task:",
+               "Without a working installation, the webR workspace runs every task:",
                "https://codemoreh.github.io/ar4ds-eu/lab.html",
                ""))
 }

@@ -1,4 +1,4 @@
-# AR4DS workspace – Europeanisation and the economy
+# AR4DS IDE workspace – Europeanisation and the economy
 
 ## **What is this?**
 
@@ -8,11 +8,11 @@ The report that you build is `index.qmd`. It renders as it stands, because the d
 
 ------------------------------------------------------------------------
 
-## Setting up the workspace
+## Setting up the IDE workspace
 
-This workspace is a plain folder, with no version control and no account to sign in to.
+This IDE workspace is a plain folder, with no version control and no account to sign in to.
 
-1.  **Download the workspace.** On the GitHub page of the template, click the green **Code** button, then **Download ZIP** – or use the direct link `https://github.com/CodeMoreh/ar4ds-eu-workspace/archive/refs/heads/main.zip`. Save it somewhere you own (Desktop or Documents).
+1.  **Download the IDE workspace.** On the GitHub page of the template, click the green **Code** button, then **Download ZIP** – or use the direct link `https://github.com/CodeMoreh/ar4ds-eu-workspace/archive/refs/heads/main.zip`. Save it somewhere you own (Desktop or Documents).
 
 2.  **Unzip it.** Extract the ZIP to a real folder (on Windows, "Extract All" – do not work inside the compressed preview). You will get a folder called `ar4ds-eu-workspace-main` containing `index.qmd`, `data/`, `R/`, and this file.
 
@@ -38,20 +38,20 @@ This workspace is a plain folder, with no version control and no account to sign
 
 ## The Eurobarometer files, for the individual-level work
 
-Everything above runs on the country-year panel in `data/`. The respondent-level data behind it are sixteen Eurobarometer surveys that GESIS distributes under terms that do not allow this workspace to include them, so they are downloaded under your own free GESIS account, into a folder outside the workspace. The workshop's website lists the sixteen studies and walks through the download at https://codemoreh.github.io/ar4ds-eu/companion/data-sources.html#sec-gesis. Two scripts then do the rest:
+Everything above runs on the country-year panel in `data/`. The respondent-level data behind it are sixteen Eurobarometer surveys that GESIS distributes under terms that do not allow this IDE workspace to include them, so they are downloaded under your own free GESIS account, into a folder outside the workspace. The workshop's website lists the sixteen studies and walks through the download at https://codemoreh.github.io/ar4ds-eu/companion/data-sources.html#sec-gesis. Two scripts then do the rest:
 
 - `prep/01_build_respondents.R` – set the folder path at the top, source it once. It checks every file against the version and checksum of the copy from which the country-year panel was built, reads the sixteen, harmonises the respondent characteristics, and writes `data_private/eb_respondents.rds`. That folder is ignored by git and must stay so: the file is licensed microdata, never to be shared or opened in a session that an AI assistant can read.
 - `prep/02_scales_and_panel.R` – read and run section by section. It builds the framing scales under the three scoring rules, averages respondents into country-years, merges the macro series, reproduces `data/europeanisation_cy.csv` to machine precision, and builds the panel by education band.
 
 The two scripts under `prep/` that begin "EXHIBIT ONLY" are the historical builds, kept for reading.
 
-The GESIS terms of use prohibit processing these files, and anything built from them, with an AI system. This workspace therefore switches off the AI features of Positron and VS Code for its whole folder, in `.vscode/settings.json`, which both IDEs read whenever the folder is open; leave that file as it is. RStudio does not read it, so in RStudio switch the assistant off under Tools → Global Options → Assistant before you open the workspace. The module on AI assistants sets out the terms and the settings: https://codemoreh.github.io/ar4ds/tools/ai.html#sec-licensed
+The GESIS terms of use prohibit processing these files, and anything built from them, with an AI system. This IDE workspace therefore switches off the AI features of Positron and VS Code for its whole folder, in `.vscode/settings.json`, which both IDEs read whenever the folder is open; leave that file as it is. RStudio does not read it, so in RStudio switch the assistant off under Tools → Global Options → Assistant before you open the workspace. The module on AI assistants sets out the terms and the settings: https://codemoreh.github.io/ar4ds/tools/ai.html#sec-licensed
 
 ------------------------------------------------------------------------
 
 ## A note on version control
 
-This folder is not a git repository, so there is nothing to commit or push and no account to set up. The workspace came from a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control and publishing the rendered report is the natural next step. The module **Git and GitHub** on the workshop's website goes through it: <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
+This folder is not a git repository, so there is nothing to commit or push and no account to set up. The IDE workspace came from a GitHub repository (`CodeMoreh/ar4ds-eu-workspace`), and putting your own work under version control and publishing the rendered report is the natural next step. The module **Git and GitHub** on the workshop's website goes through it: <https://codemoreh.github.io/ar4ds/git-github.html>. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
 
 ------------------------------------------------------------------------
 
@@ -73,13 +73,13 @@ The tasks in `index.qmd`:
 - **Workshop website:** https://codemoreh.github.io/ar4ds-eu/
 - **Submit your results:** `submit_exploration()` in Task 4 and `report_result()` in Task 5 each print a link to a pre-filled form, and the result appears on the live class chart at https://codemoreh.github.io/ar4ds-eu/class-results.html
 - **Take-home git/GitHub path:** https://codemoreh.github.io/ar4ds/git-github.html
-- **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
+- **The OSF analyst fork:** https://osf.io/6zqct/ – the analyst's maintained fork, which holds the working materials and the panel that this IDE workspace uses. The official archival record of the robustness study is at https://osf.io/8rtwe/.
 
 ------------------------------------------------------------------------
 
 ## Notes for the repository maintainer
 
-This workspace is published as the "Use this template" repository `CodeMoreh/ar4ds-eu-workspace`. Two folders serve the take-home and publishing route:
+This IDE workspace is published as the "Use this template" repository `CodeMoreh/ar4ds-eu-workspace`. Two folders serve the take-home and publishing route:
 
 - `.devcontainer/devcontainer.json` – a Codespaces / dev-container image (R + Quarto + the package list) so the repo can be opened and rendered in the cloud with no local install.
 - `.github/workflows/publish.yml` – renders the report and publishes it to GitHub Pages on every push, once **Settings → Pages → Source** is set to **"GitHub Actions"**. It installs R and re-runs the chunks, so a participant's edits show up.

@@ -24,7 +24,7 @@
 
 # --- where the files are ------------------------------------------------------
 # Put the sixteen .dta files (and the two .dta.zip archives, if you have not
-# unzipped them) in ONE folder outside this workspace, and name that folder
+# unzipped them) in ONE folder outside this IDE workspace, and name that folder
 # here or in the environment variable EB_RAW_DIR. On Windows a path can be
 # written with forward slashes: "C:/Users/you/Eurobarometer".
 raw_dir <- Sys.getenv("EB_RAW_DIR", unset = "../eurobarometer_raw")

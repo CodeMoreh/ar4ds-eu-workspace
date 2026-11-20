@@ -87,7 +87,7 @@
 .read_once <- function(name, path) {
   if (is.null(.cache[[name]])) {
     if (!file.exists(path))
-      stop(sprintf("%s not found: run from the root folder of the workspace.",
+      stop(sprintf("%s not found: run from the root folder of the IDE workspace.",
                    path), call. = FALSE)
     assign(name, readr::read_csv(path, show_col_types = FALSE, progress = FALSE), envir = .cache)
   }
@@ -233,7 +233,7 @@
   cv  <- .curve()
   hit <- cv[match(.key_of(ch), purrr::exec(paste, !!!unname(as.list(cv[.axis_codes])), sep = "|")), ]
   if (is.na(hit$b))
-    stop("The specification passed the checks but is not among the 864 on the curve: restore data/spec_curve.csv from the workspace download.",
+    stop("The specification passed the checks but is not among the 864 on the curve: restore data/spec_curve.csv from the zip of the IDE workspace.",
          call. = FALSE)
   hit
 }
@@ -263,7 +263,7 @@
                                   coefs = "x")
   stored <- .curve_row(ch)
   if (abs(conv[["t value"]] - stored$t) > 1e-8 || abs(cr2$p_Satt - stored$p_cr2) > 1e-9)
-    warning(sprintf("The live fit (t = %.4f, CR2 p = %.4f) differs from the curve (t = %.4f, p = %.4f): a file in data/ may have been edited; restore it from the workspace download.",
+    warning(sprintf("The live fit (t = %.4f, CR2 p = %.4f) differs from the curve (t = %.4f, p = %.4f): a file in data/ may have been edited; restore it from the zip of the IDE workspace.",
                     conv[["t value"]], cr2$p_Satt, stored$t, stored$p_cr2), call. = FALSE)
   r <- effectsize::t_to_r(conv[["t value"]], df)$r
   list(b = conv[["Estimate"]], se = conv[["Std. Error"]], t = conv[["t value"]], df = df,
@@ -450,7 +450,7 @@ run_spec <- function(spec) {
 # "explore: [amber-otter-42] …", so that the participant can find their own
 # circles on the class chart. The tag rides in the free-text label because the
 # form and its fields are frozen infrastructure. It is drawn once and kept in
-# .class-tag at the root of the workspace, so the explored and the declared
+# .class-tag at the root of the IDE workspace, so the explored and the declared
 # submission share it across sessions; a nickname passed to either submission
 # function replaces it. Base R throughout.
 .tag_words <- list(
@@ -491,7 +491,7 @@ run_spec <- function(spec) {
   x
 }
 
-# The tag of this workspace: the nickname if one is given, otherwise the stored
+# The tag of this IDE workspace: the nickname if one is given, otherwise the stored
 # tag, otherwise a fresh one. Returns the tag and the one it replaced, if any.
 .class_tag <- function(nickname = NULL) {
   stored <- if (file.exists(.tag_file))

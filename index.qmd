@@ -161,7 +161,7 @@ Whatever set is returned by your DAG becomes field 4 of the preregistration you 
 ------------------------------------------------------------------------
 
 ::: {.callout-note title="Task 3 – Reproduce a recorded result"}
-This is the **reproducibility** check. Three of the five analysts of the robustness study fitted their models on aggregate data, and their recorded results reproduce exactly from files in `data/`. The other two, KEVF1 and PRL47, fitted theirs on several hundred thousand respondents, whose files GESIS does not allow this workspace to hold. **Choose one of the three**, work through its chunk line by line, and compare the *t* that you get with the value on record. The chunks of the other two run as well when the report renders, so that you can set the three side by side afterwards. The codebooks in `data/` say how each file was built.
+This is the **reproducibility** check. Three of the five analysts of the robustness study fitted their models on aggregate data, and their recorded results reproduce exactly from files in `data/`. The other two, KEVF1 and PRL47, fitted theirs on several hundred thousand respondents, whose files GESIS does not allow this IDE workspace to hold. **Choose one of the three**, work through its chunk line by line, and compare the *t* that you get with the value on record. The chunks of the other two run as well when the report renders, so that you can set the three side by side afterwards. The codebooks in `data/` say how each file was built.
 
 | Analyst | Data | Model | On record |
 |:--|:--|:--|:--|
@@ -269,7 +269,7 @@ try_spec(estimator = "pooled_cl")      # pooled OLS: refused, with the reason wh
 my_experiments()
 ```
 
-When you have tried three or four, decide which one you would defend, run it once more so that it is the most recent, and submit it. It appears on the live class chart as an **exploratory** result, with the tag that `submit_exploration()` prints, such as `amber-otter-42`. The tag is kept in the file `.class-tag` of this workspace, your declared result in Task 5 carries the same one, and it is how you find your own marks on the chart. To choose your own, write `submit_exploration(nickname = "...")` with a nickname rather than your name, because the chart is public:
+When you have tried three or four, decide which one you would defend, run it once more so that it is the most recent, and submit it. It appears on the live class chart as an **exploratory** result, with the tag that `submit_exploration()` prints, such as `amber-otter-42`. The tag is kept in the file `.class-tag` of this IDE workspace, your declared result in Task 5 carries the same one, and it is how you find your own marks on the chart. To choose your own, write `submit_exploration(nickname = "...")` with a nickname rather than your name, because the chart is public:
 
 ```{r}
 #| label: submit-exploration
@@ -365,11 +365,11 @@ If the form will not open on your machine, read the printed numbers to the facil
 ------------------------------------------------------------------------
 
 ::: {.callout-note title="Taking it home"}
-Putting your own work under version control and publishing the rendered report is the natural next step, and the module [Git and GitHub](https://codemoreh.github.io/ar4ds/git-github.html) on the workshop's website goes through it. The `.github/` and `.devcontainer/` folders of this workspace set up that route once the folder is a repository again.
+Putting your own work under version control and publishing the rendered report is the natural next step, and the module [Git and GitHub](https://codemoreh.github.io/ar4ds/git-github.html) on the workshop's website goes through it. The `.github/` and `.devcontainer/` folders of this IDE workspace set up that route once the folder is a repository again.
 :::
 
 ::: {.callout-note title="Going further (optional)"}
-Each of these is a real fit that you can run in this workspace if you have time to spare.
+Each of these is a real fit that you can run in this IDE workspace if you have time to spare.
 
 - **Sweep a whole decision.** `purrr::walk(c("wb_nat", "es_1574_act", "es_2064_pop", "es_2564_lfs"), \(s) try_spec(measure = s))` fits the four unemployment series in one go, and `my_experiments()` then prints them side by side. The same trick works for any decision on which the curve keeps more than one option.
 

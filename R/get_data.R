@@ -67,7 +67,7 @@ get_data <- function(dest = "data/europeanisation_cy.csv") {
 
   # --- All remote routes exhausted ------------------------------------------
   stop("get_data(): europeanisation_cy.csv not fetched from any source and not ",
-       "found in data/. Run from the root folder of the workspace.")
+       "found in data/. Run from the root folder of the IDE workspace.")
 }
 
 # Run on source().
